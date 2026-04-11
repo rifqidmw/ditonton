@@ -1,0 +1,59 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Test and Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.8'
+          channel: 'stable'
+          cache: true
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Verify formatting
+        run: dart format --set-exit-if-changed .
+      
+      - name: Analyze code
+        run: flutter analyze --no-fatal-infos
+      
+      - name: Run tests with coverage
+        run: flutter test --coverage --coverage-path=coverage/lcov.info
+      
+      - name: Check coverage threshold
+        uses: VeryGoodOpenSource/very_good_coverage@v2
+        with:
+          path: coverage/lcov.info
+          min_coverage: 70
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: coverage/lcov.info
+          fail_ci_if_error: false
+      
+      - name: Generate coverage report
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
+          genhtml coverage/lcov.info -o coverage/html
+      
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/html
