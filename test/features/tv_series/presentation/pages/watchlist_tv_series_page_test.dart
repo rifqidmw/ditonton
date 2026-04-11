@@ -1,0 +1,132 @@
+import 'package:bloc_test/bloc_test.dart';
+import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart';
+import 'package:ditonton/features/tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_bloc.dart';
+import 'package:ditonton/features/tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_event.dart';
+import 'package:ditonton/features/tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_state.dart';
+import 'package:ditonton/features/tv_series/presentation/pages/watchlist_tv_series_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockWatchlistTvSeriesBloc
+    extends MockBloc<WatchlistTvSeriesEvent, WatchlistTvSeriesState>
+    implements WatchlistTvSeriesBloc {}
+
+void main() {
+  late MockWatchlistTvSeriesBloc mockBloc;
+
+  final testTvSeries = [
+    TvSeries(
+      id: 1,
+      name: 'Watchlist Series 1',
+      overview: 'Overview 1',
+      posterPath: '/test1.jpg',
+      voteAverage: 8.5,
+      genreIds: const [18],
+    ),
+    TvSeries(
+      id: 2,
+      name: 'Watchlist Series 2',
+      overview: 'Overview 2',
+      posterPath: '/test2.jpg',
+      voteAverage: 7.5,
+      genreIds: const [10765],
+    ),
+  ];
+
+  setUp(() {
+    mockBloc = MockWatchlistTvSeriesBloc();
+  });
+
+  Widget makeTestableWidget() {
+    return MaterialApp(
+      home: BlocProvider<WatchlistTvSeriesBloc>(
+        create: (_) => mockBloc,
+        child: const WatchlistTvSeriesPage(),
+      ),
+    );
+  }
+
+  testWidgets('should display AppBar with Watchlist title', (tester) async {
+    when(() => mockBloc.state).thenReturn(const WatchlistTvSeriesState());
+
+    await tester.pumpWidget(makeTestableWidget());
+
+    expect(find.text('Watchlist'), findsOneWidget);
+    expect(find.byType(AppBar), findsOneWidget);
+  });
+
+  testWidgets('should show loading indicator when state is loading', (
+    tester,
+  ) async {
+    when(
+      () => mockBloc.state,
+    ).thenReturn(const WatchlistTvSeriesState(state: RequestState.loading));
+
+    await tester.pumpWidget(makeTestableWidget());
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets('should show watchlist items when state is loaded', (
+    tester,
+  ) async {
+    when(() => mockBloc.state).thenReturn(
+      WatchlistTvSeriesState(
+        state: RequestState.loaded,
+        watchlistTvSeries: testTvSeries,
+      ),
+    );
+
+    await tester.pumpWidget(makeTestableWidget());
+    await tester.pump();
+
+    expect(find.byType(RefreshIndicator), findsOneWidget);
+    expect(find.byType(ListView), findsOneWidget);
+    expect(find.text('Watchlist Series 1'), findsOneWidget);
+    expect(find.text('Watchlist Series 2'), findsOneWidget);
+  });
+
+  testWidgets('should show "No watchlist yet" when watchlist is empty', (
+    tester,
+  ) async {
+    when(() => mockBloc.state).thenReturn(
+      const WatchlistTvSeriesState(
+        state: RequestState.loaded,
+        watchlistTvSeries: [],
+      ),
+    );
+
+    await tester.pumpWidget(makeTestableWidget());
+
+    expect(find.text('No watchlist yet'), findsOneWidget);
+  });
+
+  testWidgets('should show error message when state is error', (tester) async {
+    when(() => mockBloc.state).thenReturn(
+      const WatchlistTvSeriesState(
+        state: RequestState.error,
+        message: 'Failed to fetch watchlist',
+      ),
+    );
+
+    await tester.pumpWidget(makeTestableWidget());
+
+    expect(find.byKey(const Key('error_message')), findsOneWidget);
+    expect(find.text('Failed to fetch watchlist'), findsOneWidget);
+  });
+
+  testWidgets('should show pull-to-refresh on empty watchlist', (tester) async {
+    when(() => mockBloc.state).thenReturn(
+      const WatchlistTvSeriesState(
+        state: RequestState.loaded,
+        watchlistTvSeries: [],
+      ),
+    );
+
+    await tester.pumpWidget(makeTestableWidget());
+
+    expect(find.byType(RefreshIndicator), findsOneWidget);
+  });
+}

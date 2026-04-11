@@ -217,31 +217,38 @@ class DetailContent extends StatelessWidget {
                                                 ),
                                         ),
                                         const SizedBox(height: 4),
-                                        SizedBox(
-                                          width: 70,
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                season.name,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
+                                        Flexible(
+                                          child: SizedBox(
+                                            width: 70,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  season.name,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
                                                 ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              const SizedBox(height: 2),
-                                              Text(
-                                                '${season.episodeCount} Episodes',
-                                                style: const TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.black54,
+                                                const SizedBox(height: 2),
+                                                Text(
+                                                  '${season.episodeCount} Episodes',
+                                                  style: const TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.black54,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ],
