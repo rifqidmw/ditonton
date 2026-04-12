@@ -56,13 +56,12 @@ void main() {
     expect(find.text('Ditonton'), findsOneWidget);
   });
 
-  testWidgets('should display search and watchlist icons', (tester) async {
+  testWidgets('should display search icon', (tester) async {
     when(() => mockBloc.state).thenReturn(const TvSeriesListState());
 
     await tester.pumpWidget(makeTestableWidget());
 
     expect(find.byIcon(Icons.search), findsOneWidget);
-    expect(find.byIcon(Icons.bookmark), findsOneWidget);
   });
 
   testWidgets('should display section headings', (tester) async {

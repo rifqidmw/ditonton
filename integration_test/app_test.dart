@@ -1,3 +1,5 @@
+import 'package:ditonton/core/di/injection.dart' as di;
+import 'package:ditonton/core/router/app_router.dart';
 import 'package:ditonton/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,6 +7,19 @@ import 'package:integration_test/integration_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() async {
+    di.init();
+    await di.initDatabase();
+  });
+
+  tearDownAll(() async {
+    await di.locator.reset();
+  });
+
+  setUp(() {
+    router.go('/');
+  });
 
   group('Home Page Integration Tests', () {
     testWidgets('should display home page with app title', (tester) async {
@@ -21,7 +36,7 @@ void main() {
       expect(find.byIcon(Icons.search), findsOneWidget);
     });
 
-    testWidgets('should display watchlist bookmark icon on home page', (
+    testWidgets('should display watchlist bookmark icon in navigation bar', (
       tester,
     ) async {
       await tester.pumpWidget(const MainApp());
@@ -60,7 +75,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.bookmark));
       await tester.pumpAndSettle();
 
-      expect(find.text('Watchlist'), findsOneWidget);
+      expect(find.text('Watchlist'), findsAtLeastNWidgets(1));
     });
   });
 
@@ -106,7 +121,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.bookmark));
       await tester.pumpAndSettle();
 
-      expect(find.text('Watchlist'), findsOneWidget);
+      expect(find.text('Watchlist'), findsAtLeastNWidgets(1));
     });
 
     testWidgets('should display empty message on fresh watchlist', (

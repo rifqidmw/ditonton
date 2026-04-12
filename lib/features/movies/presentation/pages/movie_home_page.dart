@@ -1,28 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/core/constants/api_constants.dart';
-import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_event.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_state.dart';
+import 'package:ditonton/features/movies/domain/entities/movie.dart';
+import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_bloc.dart';
+import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_event.dart';
+import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class TvSeriesHomePage extends StatefulWidget {
-  const TvSeriesHomePage({super.key});
+class MovieHomePage extends StatefulWidget {
+  const MovieHomePage({super.key});
 
   @override
-  State<TvSeriesHomePage> createState() => _TvSeriesHomePageState();
+  State<MovieHomePage> createState() => _MovieHomePageState();
 }
 
-class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
+class _MovieHomePageState extends State<MovieHomePage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<TvSeriesListBloc>().add(FetchPopularTvSeries());
-      context.read<TvSeriesListBloc>().add(FetchTopRatedTvSeries());
-      context.read<TvSeriesListBloc>().add(FetchOnTheAirTvSeries());
+      context.read<MovieListBloc>().add(FetchNowPlayingMovies());
+      context.read<MovieListBloc>().add(FetchPopularMovies());
+      context.read<MovieListBloc>().add(FetchTopRatedMovies());
     });
   }
 
@@ -30,11 +30,11 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ditonton'),
+        title: const Text('Movies'),
         actions: [
           IconButton(
             onPressed: () {
-              context.push('/tv-series/search');
+              context.push('/movies/search');
             },
             icon: const Icon(Icons.search),
           ),
@@ -50,14 +50,15 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
                 'Now Playing',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              BlocBuilder<TvSeriesListBloc, TvSeriesListState>(
+              BlocBuilder<MovieListBloc, MovieListState>(
                 builder: (context, state) {
-                  if (state.onTheAirState == RequestState.loading) {
+                  if (state.nowPlayingState == MovieRequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state.onTheAirState == RequestState.loaded) {
-                    return TvSeriesList(state.onTheAirTvSeries);
-                  } else if (state.onTheAirState == RequestState.error) {
-                    return Center(child: Text(state.onTheAirMessage));
+                  } else if (state.nowPlayingState ==
+                      MovieRequestState.loaded) {
+                    return _MovieList(state.nowPlayingMovies);
+                  } else if (state.nowPlayingState == MovieRequestState.error) {
+                    return Center(child: Text(state.nowPlayingMessage));
                   } else {
                     return const SizedBox();
                   }
@@ -65,15 +66,15 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               ),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () => context.push('/tv-series/popular'),
+                onTap: () => context.push('/movies/popular'),
               ),
-              BlocBuilder<TvSeriesListBloc, TvSeriesListState>(
+              BlocBuilder<MovieListBloc, MovieListState>(
                 builder: (context, state) {
-                  if (state.popularState == RequestState.loading) {
+                  if (state.popularState == MovieRequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state.popularState == RequestState.loaded) {
-                    return TvSeriesList(state.popularTvSeries);
-                  } else if (state.popularState == RequestState.error) {
+                  } else if (state.popularState == MovieRequestState.loaded) {
+                    return _MovieList(state.popularMovies);
+                  } else if (state.popularState == MovieRequestState.error) {
                     return Center(child: Text(state.popularMessage));
                   } else {
                     return const SizedBox();
@@ -82,15 +83,15 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               ),
               _buildSubHeading(
                 title: 'Top Rated',
-                onTap: () => context.push('/tv-series/top-rated'),
+                onTap: () => context.push('/movies/top-rated'),
               ),
-              BlocBuilder<TvSeriesListBloc, TvSeriesListState>(
+              BlocBuilder<MovieListBloc, MovieListState>(
                 builder: (context, state) {
-                  if (state.topRatedState == RequestState.loading) {
+                  if (state.topRatedState == MovieRequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state.topRatedState == RequestState.loaded) {
-                    return TvSeriesList(state.topRatedTvSeries);
-                  } else if (state.topRatedState == RequestState.error) {
+                  } else if (state.topRatedState == MovieRequestState.loaded) {
+                    return _MovieList(state.topRatedMovies);
+                  } else if (state.topRatedState == MovieRequestState.error) {
                     return Center(child: Text(state.topRatedMessage));
                   } else {
                     return const SizedBox();
@@ -104,7 +105,7 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
     );
   }
 
-  Row _buildSubHeading({required String title, required Function() onTap}) {
+  Row _buildSubHeading({required String title, required VoidCallback onTap}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -123,10 +124,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
   }
 }
 
-class TvSeriesList extends StatelessWidget {
-  final List<TvSeries> tvSeriesList;
+class _MovieList extends StatelessWidget {
+  final List<Movie> movies;
 
-  const TvSeriesList(this.tvSeriesList, {super.key});
+  const _MovieList(this.movies);
 
   @override
   Widget build(BuildContext context) {
@@ -135,33 +136,35 @@ class TvSeriesList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final tvSeries = tvSeriesList[index];
-          return Padding(
+          final movie = movies[index];
+          return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
-                context.push('/tv-series/${tvSeries.id}');
+                context.push('/movies/${movie.id}');
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
-                child: tvSeries.posterPath != null
+                child: movie.posterPath != null
                     ? CachedNetworkImage(
-                        imageUrl: ApiConstants.imageUrl(tvSeries.posterPath!),
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
+                        imageUrl: ApiConstants.imageUrl(movie.posterPath!),
+                        placeholder: (context, url) => const SizedBox(
+                          width: 120,
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                       )
                     : Container(
                         width: 120,
                         color: Colors.grey,
-                        child: const Icon(Icons.image_not_supported),
+                        child: const Icon(Icons.movie),
                       ),
               ),
             ),
           );
         },
-        itemCount: tvSeriesList.length,
+        itemCount: movies.length,
       ),
     );
   }

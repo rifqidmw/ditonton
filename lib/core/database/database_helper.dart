@@ -19,12 +19,18 @@ class DatabaseHelper {
   }
 
   static const String _tblWatchlistTv = 'watchlist_tv';
+  static const String _tblWatchlistMovies = 'watchlist_movies';
 
   Future<Database> _initDb() async {
     final Directory directory = await getApplicationDocumentsDirectory();
     final path = join(directory.path, 'ditonton.db');
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+    );
   }
 
   void _onCreate(Database db, int version) async {
@@ -36,5 +42,26 @@ class DatabaseHelper {
         overview TEXT
       );
     ''');
+    await db.execute('''
+      CREATE TABLE $_tblWatchlistMovies (
+        id INTEGER PRIMARY KEY,
+        title TEXT,
+        posterPath TEXT,
+        overview TEXT
+      );
+    ''');
+  }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS $_tblWatchlistMovies (
+          id INTEGER PRIMARY KEY,
+          title TEXT,
+          posterPath TEXT,
+          overview TEXT
+        );
+      ''');
+    }
   }
 }

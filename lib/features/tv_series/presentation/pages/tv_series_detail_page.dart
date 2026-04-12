@@ -183,7 +183,7 @@ class DetailContent extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             SizedBox(
-                              height: 150,
+                              height: 170,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: tvSeries.seasons.length,

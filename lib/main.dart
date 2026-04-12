@@ -1,5 +1,9 @@
 import 'package:ditonton/core/di/injection.dart' as di;
 import 'package:ditonton/core/router/app_router.dart';
+import 'package:ditonton/features/movies/presentation/bloc/movie_detail/movie_detail_bloc.dart';
+import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_bloc.dart';
+import 'package:ditonton/features/movies/presentation/bloc/movie_search/movie_search_bloc.dart';
+import 'package:ditonton/features/movies/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
 import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_detail/tv_series_detail_bloc.dart';
 import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.dart';
 import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_search/tv_series_search_bloc.dart';
@@ -26,6 +30,10 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (_) => di.locator<TvSeriesDetailBloc>()),
         BlocProvider(create: (_) => di.locator<TvSeriesSearchBloc>()),
         BlocProvider(create: (_) => di.locator<WatchlistTvSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<MovieListBloc>()),
+        BlocProvider(create: (_) => di.locator<MovieDetailBloc>()),
+        BlocProvider(create: (_) => di.locator<MovieSearchBloc>()),
+        BlocProvider(create: (_) => di.locator<WatchlistMovieBloc>()),
       ],
       child: MaterialApp.router(
         title: 'Ditonton',

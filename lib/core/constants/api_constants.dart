@@ -2,6 +2,7 @@ class ApiConstants {
   static const String baseUrl = 'https://api.themoviedb.org/3';
   static const String apiKey = '2174d146bb9c0eab47529b2e77d6b526';
 
+  // TV Series
   static const String popularTvSeries = '$baseUrl/tv/popular?api_key=$apiKey';
   static const String topRatedTvSeries =
       '$baseUrl/tv/top_rated?api_key=$apiKey';
@@ -13,6 +14,19 @@ class ApiConstants {
       '$baseUrl/tv/$id/recommendations?api_key=$apiKey';
   static String searchTvSeries(String query) =>
       '$baseUrl/search/tv?api_key=$apiKey&query=$query';
+
+  // Movies
+  static const String nowPlayingMovies =
+      '$baseUrl/movie/now_playing?api_key=$apiKey';
+  static const String popularMovies = '$baseUrl/movie/popular?api_key=$apiKey';
+  static const String topRatedMovies =
+      '$baseUrl/movie/top_rated?api_key=$apiKey';
+
+  static String movieDetail(int id) => '$baseUrl/movie/$id?api_key=$apiKey';
+  static String movieRecommendations(int id) =>
+      '$baseUrl/movie/$id/recommendations?api_key=$apiKey';
+  static String searchMovies(String query) =>
+      '$baseUrl/search/movie?api_key=$apiKey&query=$query';
 
   // Image
   static const String baseImageUrl = 'https://image.tmdb.org/t/p/w500';
