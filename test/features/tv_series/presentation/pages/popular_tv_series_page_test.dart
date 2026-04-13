@@ -53,7 +53,7 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget());
 
-    expect(find.text('Popular Movies'), findsOneWidget);
+    expect(find.text('Popular TV Series'), findsOneWidget);
     expect(find.byType(AppBar), findsOneWidget);
   });
 
