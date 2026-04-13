@@ -1,13 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/core/error/failures.dart';
-import 'package:ditonton/features/movies/domain/entities/movie.dart';
-import 'package:ditonton/features/movies/domain/usecases/get_now_playing_movies.dart';
-import 'package:ditonton/features/movies/domain/usecases/get_popular_movies.dart';
-import 'package:ditonton/features/movies/domain/usecases/get_top_rated_movies.dart';
-import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_bloc.dart';
-import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_event.dart';
-import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_state.dart';
+import 'package:core/error/failures.dart';
+import 'package:movies/domain/entities/movie.dart';
+import 'package:movies/domain/usecases/get_now_playing_movies.dart';
+import 'package:movies/domain/usecases/get_popular_movies.dart';
+import 'package:movies/domain/usecases/get_top_rated_movies.dart';
+import 'package:movies/presentation/bloc/movie_list/movie_list_bloc.dart';
+import 'package:movies/presentation/bloc/movie_list/movie_list_event.dart';
+import 'package:movies/presentation/bloc/movie_list/movie_list_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

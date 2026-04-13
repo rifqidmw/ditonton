@@ -1,5 +1,5 @@
-import 'package:ditonton/core/error/exceptions.dart';
-import 'package:ditonton/core/error/failures.dart';
+import 'package:core/error/exceptions.dart';
+import 'package:core/error/failures.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

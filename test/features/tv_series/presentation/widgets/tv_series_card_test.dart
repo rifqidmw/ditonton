@@ -1,5 +1,5 @@
-import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart';
-import 'package:ditonton/features/tv_series/presentation/widgets/tv_series_card.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
+import 'package:tv_series/presentation/widgets/tv_series_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

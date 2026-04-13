@@ -1,4 +1,4 @@
-import 'package:ditonton/core/constants/api_constants.dart';
+import 'package:core/constants/api_constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

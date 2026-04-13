@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:ditonton/features/movies/domain/entities/movie.dart';
-import 'package:ditonton/features/movies/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
-import 'package:ditonton/features/movies/presentation/bloc/watchlist_movie/watchlist_movie_event.dart';
-import 'package:ditonton/features/movies/presentation/bloc/watchlist_movie/watchlist_movie_state.dart';
-import 'package:ditonton/features/movies/presentation/bloc/movie_list/movie_list_state.dart';
-import 'package:ditonton/features/movies/presentation/pages/watchlist_movie_page.dart';
+import 'package:movies/domain/entities/movie.dart';
+import 'package:movies/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
+import 'package:movies/presentation/bloc/watchlist_movie/watchlist_movie_event.dart';
+import 'package:movies/presentation/bloc/watchlist_movie/watchlist_movie_state.dart';
+import 'package:movies/presentation/bloc/movie_list/movie_list_state.dart';
+import 'package:movies/presentation/pages/watchlist_movie_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

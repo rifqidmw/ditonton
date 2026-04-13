@@ -1,0 +1,29 @@
+name: tv_series
+description: "TV Series feature module for Ditonton app."
+version: 0.0.1
+
+environment:
+  sdk: ^3.10.8
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+    path: ../core
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+  dartz: ^0.10.1
+  dio: ^5.4.0
+  sqflite: ^2.4.1
+  cached_network_image: ^3.4.1
+  rxdart: ^0.28.0
+  go_router: ^14.6.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

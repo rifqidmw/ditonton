@@ -6,12 +6,12 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:ditonton/core/error/failures.dart' as _i5;
-import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart'
+import 'package:core/error/failures.dart' as _i5;
+import 'package:tv_series/domain/entities/tv_series.dart'
     as _i6;
-import 'package:ditonton/features/tv_series/domain/entities/tv_series_detail.dart'
+import 'package:tv_series/domain/entities/tv_series_detail.dart'
     as _i7;
-import 'package:ditonton/features/tv_series/domain/repositories/tv_series_repository.dart'
+import 'package:tv_series/domain/repositories/tv_series_repository.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 

@@ -1,11 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/core/error/failures.dart';
-import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart';
-import 'package:ditonton/features/tv_series/domain/usecases/get_watchlist_tv_series.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_bloc.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_event.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_state.dart';
+import 'package:core/error/failures.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
+import 'package:tv_series/domain/usecases/get_watchlist_tv_series.dart';
+import 'package:tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_bloc.dart';
+import 'package:tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_event.dart';
+import 'package:tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

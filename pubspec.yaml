@@ -10,6 +10,15 @@ dependencies:
   flutter:
     sdk: flutter
   
+  about: 
+    path: about
+  core:
+    path: core
+  movies:
+    path: movies
+  tv_series:
+    path: tv_series
+  
   # State Management
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
@@ -53,3 +62,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/

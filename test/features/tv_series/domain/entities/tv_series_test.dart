@@ -1,4 +1,4 @@
-import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,13 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/core/error/failures.dart';
-import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart';
-import 'package:ditonton/features/tv_series/domain/usecases/get_on_the_air_tv_series.dart';
-import 'package:ditonton/features/tv_series/domain/usecases/get_popular_tv_series.dart';
-import 'package:ditonton/features/tv_series/domain/usecases/get_top_rated_tv_series.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_event.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_state.dart';
+import 'package:core/error/failures.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
+import 'package:tv_series/domain/usecases/get_on_the_air_tv_series.dart';
+import 'package:tv_series/domain/usecases/get_popular_tv_series.dart';
+import 'package:tv_series/domain/usecases/get_top_rated_tv_series.dart';
+import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.dart';
+import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_event.dart';
+import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

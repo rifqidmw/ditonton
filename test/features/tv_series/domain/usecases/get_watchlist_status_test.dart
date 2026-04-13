@@ -1,4 +1,4 @@
-import 'package:ditonton/features/tv_series/domain/usecases/get_watchlist_status.dart';
+import 'package:tv_series/domain/usecases/get_watchlist_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

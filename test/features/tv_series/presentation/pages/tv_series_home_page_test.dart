@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:ditonton/features/tv_series/domain/entities/tv_series.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_event.dart';
-import 'package:ditonton/features/tv_series/presentation/bloc/tv_series_list/tv_series_list_state.dart';
-import 'package:ditonton/features/tv_series/presentation/pages/tv_series_home_page.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
+import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.dart';
+import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_event.dart';
+import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_state.dart';
+import 'package:tv_series/presentation/pages/tv_series_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

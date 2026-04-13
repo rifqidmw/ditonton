@@ -1,7 +1,8 @@
-import 'package:ditonton/features/movies/presentation/pages/movie_home_page.dart';
-import 'package:ditonton/features/movies/presentation/pages/watchlist_movie_page.dart';
-import 'package:ditonton/features/tv_series/presentation/pages/tv_series_home_page.dart';
-import 'package:ditonton/features/tv_series/presentation/pages/watchlist_tv_series_page.dart';
+import 'package:about/about_page.dart';
+import 'package:movies/presentation/pages/movie_home_page.dart';
+import 'package:movies/presentation/pages/watchlist_movie_page.dart';
+import 'package:tv_series/presentation/pages/tv_series_home_page.dart';
+import 'package:tv_series/presentation/pages/watchlist_tv_series_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,9 +20,15 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: const [TvSeriesHomePage(), MovieHomePage(), _WatchlistPage()],
+        children: const [
+          TvSeriesHomePage(),
+          MovieHomePage(),
+          _WatchlistPage(),
+          AboutPage(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
         items: const [
@@ -31,6 +38,7 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(Icons.bookmark),
             label: 'Watchlist',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'About'),
         ],
       ),
     );
