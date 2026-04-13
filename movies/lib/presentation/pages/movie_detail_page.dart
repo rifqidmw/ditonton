@@ -24,6 +24,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
+      if (!mounted) return;
       context.read<MovieDetailBloc>().add(FetchMovieDetail(widget.id));
       context.read<MovieDetailBloc>().add(LoadMovieWatchlistStatus(widget.id));
     });

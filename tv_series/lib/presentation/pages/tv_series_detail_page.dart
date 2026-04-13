@@ -23,6 +23,7 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
+      if (!mounted) return;
       context.read<TvSeriesDetailBloc>().add(FetchTvSeriesDetail(widget.id));
       context.read<TvSeriesDetailBloc>().add(LoadWatchlistStatus(widget.id));
     });

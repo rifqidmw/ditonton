@@ -20,6 +20,7 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
   void initState() {
     super.initState();
     Future.microtask(() {
+      if (!mounted) return;
       context.read<TvSeriesListBloc>().add(FetchPopularTvSeries());
       context.read<TvSeriesListBloc>().add(FetchTopRatedTvSeries());
       context.read<TvSeriesListBloc>().add(FetchOnTheAirTvSeries());
