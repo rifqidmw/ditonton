@@ -16,9 +16,9 @@ workflows:
       - name: Flutter test
         script: |
           flutter test
-      - name: Flutter build iOS (no codesign)
+      - name: Flutter build iOS (simulator, no codesign)
         script: |
-          flutter build ios --debug --no-codesign
+          flutter build ios --debug --simulator
     artifacts:
       - build/ios/iphoneos/Runner.app
       - flutter_drive.log
