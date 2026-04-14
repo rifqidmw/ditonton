@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core/network/ssl_pinning.dart';
 import 'package:ditonton/core/di/injection.dart' as di;
 import 'package:ditonton/core/router/app_router.dart';
@@ -20,13 +22,17 @@ import 'package:tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_ser
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (!Platform.isIOS) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+  }
 
   await SslPinning.check();
   di.init();

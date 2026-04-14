@@ -26,7 +26,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -55,14 +57,5 @@ class DefaultFirebaseOptions {
     messagingSenderId: '879132769592',
     projectId: 'ditonton-d7e2b',
     storageBucket: 'ditonton-d7e2b.firebasestorage.app',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA9gqqRut6fWd9oYhTmiGxwIHnfAoOqgyg',
-    appId: '1:879132769592:ios:613e2bf4ca4830e82715cd',
-    messagingSenderId: '879132769592',
-    projectId: 'ditonton-d7e2b',
-    storageBucket: 'ditonton-d7e2b.firebasestorage.app',
-    iosBundleId: 'com.thelazyproject.ditonton',
   );
 }
