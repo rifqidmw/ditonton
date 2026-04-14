@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class WatchlistTvSeriesPage extends StatelessWidget {
-  const WatchlistTvSeriesPage({super.key});
+class WatchlistTVSeriesPage extends StatelessWidget {
+  const WatchlistTVSeriesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,22 +15,22 @@ class WatchlistTvSeriesPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Watchlist')),
       body: const Padding(
         padding: EdgeInsets.all(8.0),
-        child: WatchlistTvSeriesBodyContent(),
+        child: WatchlistTVSeriesBodyContent(),
       ),
     );
   }
 }
 
-class WatchlistTvSeriesBodyContent extends StatefulWidget {
-  const WatchlistTvSeriesBodyContent({super.key});
+class WatchlistTVSeriesBodyContent extends StatefulWidget {
+  const WatchlistTVSeriesBodyContent({super.key});
 
   @override
-  State<WatchlistTvSeriesBodyContent> createState() =>
-      _WatchlistTvSeriesBodyContentState();
+  State<WatchlistTVSeriesBodyContent> createState() =>
+      _WatchlistTVSeriesBodyContentState();
 }
 
-class _WatchlistTvSeriesBodyContentState
-    extends State<WatchlistTvSeriesBodyContent> {
+class _WatchlistTVSeriesBodyContentState
+    extends State<WatchlistTVSeriesBodyContent> {
   @override
   void initState() {
     super.initState();
@@ -38,7 +38,7 @@ class _WatchlistTvSeriesBodyContentState
   }
 
   void _fetchWatchlist() {
-    context.read<WatchlistTvSeriesBloc>().add(FetchWatchlistTvSeries());
+    context.read<WatchlistTVSeriesBloc>().add(FetchWatchlistTVSeries());
   }
 
   Future<void> _onRefresh() async {
@@ -48,12 +48,12 @@ class _WatchlistTvSeriesBodyContentState
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+    return BlocBuilder<WatchlistTVSeriesBloc, WatchlistTVSeriesState>(
       builder: (context, state) {
         if (state.state == RequestState.loading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state.state == RequestState.loaded) {
-          if (state.watchlistTvSeries.isEmpty) {
+          if (state.watchlistTVSeries.isEmpty) {
             return RefreshIndicator(
               onRefresh: _onRefresh,
               child: ListView(
@@ -70,8 +70,8 @@ class _WatchlistTvSeriesBodyContentState
             onRefresh: _onRefresh,
             child: ListView.builder(
               itemBuilder: (context, index) {
-                final tvSeries = state.watchlistTvSeries[index];
-                return TvSeriesCard(
+                final tvSeries = state.watchlistTVSeries[index];
+                return TVSeriesCard(
                   tvSeries: tvSeries,
                   onTap: () async {
                     await context.push('/tv-series/${tvSeries.id}');
@@ -81,7 +81,7 @@ class _WatchlistTvSeriesBodyContentState
                   },
                 );
               },
-              itemCount: state.watchlistTvSeries.length,
+              itemCount: state.watchlistTVSeries.length,
             ),
           );
         } else if (state.state == RequestState.error) {

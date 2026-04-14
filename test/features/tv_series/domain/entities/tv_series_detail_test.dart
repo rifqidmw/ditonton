@@ -11,7 +11,7 @@ void main() {
     posterPath: '/season1.jpg',
   );
 
-  const tvSeriesDetail = TvSeriesDetail(
+  const tvSeriesDetail = TVSeriesDetail(
     id: 1,
     name: 'Test TV Series',
     overview: 'Test overview',
@@ -120,7 +120,7 @@ void main() {
     });
 
     test('should support value equality', () {
-      const tvSeriesDetail1 = TvSeriesDetail(
+      const tvSeriesDetail1 = TVSeriesDetail(
         id: 1,
         name: 'Test',
         overview: 'Overview',
@@ -133,7 +133,7 @@ void main() {
         status: 'Ended',
       );
 
-      const tvSeriesDetail2 = TvSeriesDetail(
+      const tvSeriesDetail2 = TVSeriesDetail(
         id: 1,
         name: 'Test',
         overview: 'Overview',
@@ -150,7 +150,7 @@ void main() {
     });
 
     test('should not be equal when properties differ', () {
-      const tvSeriesDetail1 = TvSeriesDetail(
+      const tvSeriesDetail1 = TVSeriesDetail(
         id: 1,
         name: 'Test',
         overview: 'Overview',
@@ -163,7 +163,7 @@ void main() {
         status: 'Ended',
       );
 
-      const tvSeriesDetail2 = TvSeriesDetail(
+      const tvSeriesDetail2 = TVSeriesDetail(
         id: 2,
         name: 'Test',
         overview: 'Overview',

@@ -4,19 +4,23 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 
 enum RequestState { empty, loading, loaded, error }
 
-class TvSeriesDetailState extends Equatable {
+class TVSeriesDetailState extends Equatable {
   final RequestState detailState;
-  final TvSeriesDetail? tvSeriesDetail;
+  final TVSeriesDetail? tvSeriesDetail;
   final String detailMessage;
 
   final RequestState recommendationState;
-  final List<TvSeries> recommendations;
+  final List<TVSeries> recommendations;
   final String recommendationMessage;
 
   final bool isAddedToWatchlist;
   final String watchlistMessage;
 
-  const TvSeriesDetailState({
+  final RequestState seasonDetailState;
+  final SeasonDetail? selectedSeasonDetail;
+  final String seasonDetailMessage;
+
+  const TVSeriesDetailState({
     this.detailState = RequestState.empty,
     this.tvSeriesDetail,
     this.detailMessage = '',
@@ -25,19 +29,25 @@ class TvSeriesDetailState extends Equatable {
     this.recommendationMessage = '',
     this.isAddedToWatchlist = false,
     this.watchlistMessage = '',
+    this.seasonDetailState = RequestState.empty,
+    this.selectedSeasonDetail,
+    this.seasonDetailMessage = '',
   });
 
-  TvSeriesDetailState copyWith({
+  TVSeriesDetailState copyWith({
     RequestState? detailState,
-    TvSeriesDetail? tvSeriesDetail,
+    TVSeriesDetail? tvSeriesDetail,
     String? detailMessage,
     RequestState? recommendationState,
-    List<TvSeries>? recommendations,
+    List<TVSeries>? recommendations,
     String? recommendationMessage,
     bool? isAddedToWatchlist,
     String? watchlistMessage,
+    RequestState? seasonDetailState,
+    SeasonDetail? selectedSeasonDetail,
+    String? seasonDetailMessage,
   }) {
-    return TvSeriesDetailState(
+    return TVSeriesDetailState(
       detailState: detailState ?? this.detailState,
       tvSeriesDetail: tvSeriesDetail ?? this.tvSeriesDetail,
       detailMessage: detailMessage ?? this.detailMessage,
@@ -47,6 +57,9 @@ class TvSeriesDetailState extends Equatable {
           recommendationMessage ?? this.recommendationMessage,
       isAddedToWatchlist: isAddedToWatchlist ?? this.isAddedToWatchlist,
       watchlistMessage: watchlistMessage ?? this.watchlistMessage,
+      seasonDetailState: seasonDetailState ?? this.seasonDetailState,
+      selectedSeasonDetail: selectedSeasonDetail ?? this.selectedSeasonDetail,
+      seasonDetailMessage: seasonDetailMessage ?? this.seasonDetailMessage,
     );
   }
 
@@ -60,5 +73,8 @@ class TvSeriesDetailState extends Equatable {
     recommendationMessage,
     isAddedToWatchlist,
     watchlistMessage,
+    seasonDetailState,
+    selectedSeasonDetail,
+    seasonDetailMessage,
   ];
 }

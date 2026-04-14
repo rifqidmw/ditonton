@@ -7,24 +7,24 @@ import 'package:mockito/mockito.dart';
 import 'get_popular_tv_series_test.mocks.dart';
 
 void main() {
-  late SearchTvSeries usecase;
+  late SearchTVSeries usecase;
   late MockTvSeriesRepository mockTvSeriesRepository;
 
   setUp(() {
     mockTvSeriesRepository = MockTvSeriesRepository();
-    usecase = SearchTvSeries(mockTvSeriesRepository);
+    usecase = SearchTVSeries(mockTvSeriesRepository);
   });
 
-  final tTvSeries = <TvSeries>[];
+  final tTvSeries = <TVSeries>[];
   const tQuery = 'Demon Slayer';
 
   test('should get list of tv series from the repository', () async {
     when(
-      mockTvSeriesRepository.searchTvSeries(tQuery),
+      mockTvSeriesRepository.searchTVSeries(tQuery),
     ).thenAnswer((_) async => Right(tTvSeries));
     final result = await usecase.execute(tQuery);
     expect(result, Right(tTvSeries));
-    verify(mockTvSeriesRepository.searchTvSeries(tQuery));
+    verify(mockTvSeriesRepository.searchTVSeries(tQuery));
     verifyNoMoreInteractions(mockTvSeriesRepository);
   });
 }

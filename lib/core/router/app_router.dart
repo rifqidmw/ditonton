@@ -16,25 +16,25 @@ final router = GoRouter(
     GoRoute(path: '/', builder: (context, state) => const MainPage()),
     GoRoute(
       path: '/tv-series/popular',
-      builder: (context, state) => const PopularTvSeriesPage(),
+      builder: (context, state) => const PopularTVSeriesPage(),
     ),
     GoRoute(
       path: '/tv-series/top-rated',
-      builder: (context, state) => const TopRatedTvSeriesPage(),
+      builder: (context, state) => const TopRatedTVSeriesPage(),
     ),
     GoRoute(
       path: '/tv-series/search',
-      builder: (context, state) => const TvSeriesSearchPage(),
+      builder: (context, state) => const TVSeriesSearchPage(),
     ),
     GoRoute(
       path: '/tv-series/watchlist',
-      builder: (context, state) => const WatchlistTvSeriesPage(),
+      builder: (context, state) => const WatchlistTVSeriesPage(),
     ),
     GoRoute(
       path: '/tv-series/:id',
       builder: (context, state) {
         final id = int.parse(state.pathParameters['id']!);
-        return TvSeriesDetailPage(id: id);
+        return TVSeriesDetailPage(id: id);
       },
     ),
     GoRoute(

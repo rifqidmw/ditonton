@@ -8,18 +8,18 @@ void main() {
     });
 
     test('popularTvSeries URL should contain api_key', () {
-      expect(ApiConstants.popularTvSeries, contains('api_key='));
-      expect(ApiConstants.popularTvSeries, contains('/tv/popular'));
+      expect(ApiConstants.popularTVSeries, contains('api_key='));
+      expect(ApiConstants.popularTVSeries, contains('/tv/popular'));
     });
 
     test('topRatedTvSeries URL should contain api_key', () {
-      expect(ApiConstants.topRatedTvSeries, contains('api_key='));
-      expect(ApiConstants.topRatedTvSeries, contains('/tv/top_rated'));
+      expect(ApiConstants.topRatedTVSeries, contains('api_key='));
+      expect(ApiConstants.topRatedTVSeries, contains('/tv/top_rated'));
     });
 
     test('onTheAirTvSeries URL should contain api_key', () {
-      expect(ApiConstants.onTheAirTvSeries, contains('api_key='));
-      expect(ApiConstants.onTheAirTvSeries, contains('/tv/on_the_air'));
+      expect(ApiConstants.onTheAirTVSeries, contains('api_key='));
+      expect(ApiConstants.onTheAirTVSeries, contains('/tv/on_the_air'));
     });
 
     test('tvSeriesDetail should generate correct URL for given id', () {
@@ -41,7 +41,7 @@ void main() {
 
     test('searchTvSeries should generate correct URL with query', () {
       const query = 'breaking bad';
-      final url = ApiConstants.searchTvSeries(query);
+      final url = ApiConstants.searchTVSeries(query);
       expect(url, contains('/search/tv'));
       expect(url, contains('query=breaking bad'));
       expect(url, contains('api_key='));

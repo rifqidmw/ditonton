@@ -29,7 +29,7 @@ class Season extends Equatable {
   List<Object?> get props => [id, name, episodeCount, seasonNumber, posterPath];
 }
 
-class TvSeriesDetail extends Equatable {
+class TVSeriesDetail extends Equatable {
   final int id;
   final String name;
   final String? posterPath;
@@ -43,7 +43,7 @@ class TvSeriesDetail extends Equatable {
   final List<Season> seasons;
   final String status;
 
-  const TvSeriesDetail({
+  const TVSeriesDetail({
     required this.id,
     required this.name,
     this.posterPath,
@@ -72,5 +72,67 @@ class TvSeriesDetail extends Equatable {
     numberOfSeasons,
     seasons,
     status,
+  ];
+}
+
+class Episode extends Equatable {
+  final int id;
+  final String name;
+  final int episodeNumber;
+  final int seasonNumber;
+  final String overview;
+  final String? stillPath;
+  final double voteAverage;
+  final String? airDate;
+
+  const Episode({
+    required this.id,
+    required this.name,
+    required this.episodeNumber,
+    required this.seasonNumber,
+    required this.overview,
+    this.stillPath,
+    required this.voteAverage,
+    this.airDate,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    episodeNumber,
+    seasonNumber,
+    overview,
+    stillPath,
+    voteAverage,
+    airDate,
+  ];
+}
+
+class SeasonDetail extends Equatable {
+  final int id;
+  final String name;
+  final int seasonNumber;
+  final String? posterPath;
+  final String overview;
+  final List<Episode> episodes;
+
+  const SeasonDetail({
+    required this.id,
+    required this.name,
+    required this.seasonNumber,
+    this.posterPath,
+    required this.overview,
+    required this.episodes,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    seasonNumber,
+    posterPath,
+    overview,
+    episodes,
   ];
 }

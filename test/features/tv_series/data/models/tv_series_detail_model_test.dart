@@ -12,7 +12,7 @@ void main() {
     posterPath: '/season1.jpg',
   );
 
-  const tvSeriesDetailModel = TvSeriesDetailModel(
+  const tvSeriesDetailModel = TVSeriesDetailModel(
     id: 1,
     name: 'Test TV Series',
     posterPath: '/test.jpg',
@@ -116,7 +116,7 @@ void main() {
 
   group('TvSeriesDetailModel', () {
     test('should be a subclass of TvSeriesDetail entity', () {
-      expect(tvSeriesDetailModel, isA<TvSeriesDetail>());
+      expect(tvSeriesDetailModel, isA<TVSeriesDetail>());
     });
 
     test('fromJson should return a valid model', () {
@@ -145,7 +145,7 @@ void main() {
         'status': 'Returning Series',
       };
 
-      final result = TvSeriesDetailModel.fromJson(jsonMap);
+      final result = TVSeriesDetailModel.fromJson(jsonMap);
 
       expect(result, tvSeriesDetailModel);
     });
@@ -176,7 +176,7 @@ void main() {
         'status': 'Returning Series',
       };
 
-      final result = TvSeriesDetailModel.fromJson(jsonMap);
+      final result = TVSeriesDetailModel.fromJson(jsonMap);
 
       expect(result.voteAverage, 8.0);
     });

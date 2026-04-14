@@ -1,24 +1,24 @@
 import 'package:equatable/equatable.dart';
 import 'package:tv_series/domain/entities/tv_series_detail.dart';
 
-abstract class TvSeriesDetailEvent extends Equatable {
-  const TvSeriesDetailEvent();
+abstract class TVSeriesDetailEvent extends Equatable {
+  const TVSeriesDetailEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class FetchTvSeriesDetail extends TvSeriesDetailEvent {
+class FetchTVSeriesDetail extends TVSeriesDetailEvent {
   final int id;
 
-  const FetchTvSeriesDetail(this.id);
+  const FetchTVSeriesDetail(this.id);
 
   @override
   List<Object> get props => [id];
 }
 
-class AddToWatchlist extends TvSeriesDetailEvent {
-  final TvSeriesDetail tvSeriesDetail;
+class AddToWatchlist extends TVSeriesDetailEvent {
+  final TVSeriesDetail tvSeriesDetail;
 
   const AddToWatchlist(this.tvSeriesDetail);
 
@@ -26,8 +26,8 @@ class AddToWatchlist extends TvSeriesDetailEvent {
   List<Object> get props => [tvSeriesDetail];
 }
 
-class RemoveFromWatchlist extends TvSeriesDetailEvent {
-  final TvSeriesDetail tvSeriesDetail;
+class RemoveFromWatchlist extends TVSeriesDetailEvent {
+  final TVSeriesDetail tvSeriesDetail;
 
   const RemoveFromWatchlist(this.tvSeriesDetail);
 
@@ -35,11 +35,21 @@ class RemoveFromWatchlist extends TvSeriesDetailEvent {
   List<Object> get props => [tvSeriesDetail];
 }
 
-class LoadWatchlistStatus extends TvSeriesDetailEvent {
+class LoadWatchlistStatus extends TVSeriesDetailEvent {
   final int id;
 
   const LoadWatchlistStatus(this.id);
 
   @override
   List<Object> get props => [id];
+}
+
+class FetchSeasonDetail extends TVSeriesDetailEvent {
+  final int tvId;
+  final int seasonNumber;
+
+  const FetchSeasonDetail(this.tvId, this.seasonNumber);
+
+  @override
+  List<Object> get props => [tvId, seasonNumber];
 }

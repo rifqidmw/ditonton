@@ -5,27 +5,27 @@ import 'package:tv_series/domain/usecases/get_on_the_air_tv_series.dart';
 import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_event.dart';
 import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_state.dart';
 
-class TvSeriesListBloc extends Bloc<TvSeriesListEvent, TvSeriesListState> {
-  final GetPopularTvSeries getPopularTvSeries;
-  final GetTopRatedTvSeries getTopRatedTvSeries;
-  final GetOnTheAirTvSeries getOnTheAirTvSeries;
+class TVSeriesListBloc extends Bloc<TVSeriesListEvent, TVSeriesListState> {
+  final GetPopularTVSeries getPopularTVSeries;
+  final GetTopRatedTVSeries getTopRatedTVSeries;
+  final GetOnTheAirTVSeries getOnTheAirTVSeries;
 
-  TvSeriesListBloc({
-    required this.getPopularTvSeries,
-    required this.getTopRatedTvSeries,
-    required this.getOnTheAirTvSeries,
-  }) : super(const TvSeriesListState()) {
-    on<FetchPopularTvSeries>(_onFetchPopularTvSeries);
-    on<FetchTopRatedTvSeries>(_onFetchTopRatedTvSeries);
-    on<FetchOnTheAirTvSeries>(_onFetchOnTheAirTvSeries);
+  TVSeriesListBloc({
+    required this.getPopularTVSeries,
+    required this.getTopRatedTVSeries,
+    required this.getOnTheAirTVSeries,
+  }) : super(const TVSeriesListState()) {
+    on<FetchPopularTVSeries>(_onFetchPopularTVSeries);
+    on<FetchTopRatedTVSeries>(_onFetchTopRatedTVSeries);
+    on<FetchOnTheAirTVSeries>(_onFetchOnTheAirTVSeries);
   }
 
-  Future<void> _onFetchPopularTvSeries(
-    FetchPopularTvSeries event,
-    Emitter<TvSeriesListState> emit,
+  Future<void> _onFetchPopularTVSeries(
+    FetchPopularTVSeries event,
+    Emitter<TVSeriesListState> emit,
   ) async {
     emit(state.copyWith(popularState: RequestState.loading));
-    final result = await getPopularTvSeries.execute();
+    final result = await getPopularTVSeries.execute();
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -36,18 +36,18 @@ class TvSeriesListBloc extends Bloc<TvSeriesListEvent, TvSeriesListState> {
       (tvSeriesData) => emit(
         state.copyWith(
           popularState: RequestState.loaded,
-          popularTvSeries: tvSeriesData,
+          popularTVSeries: tvSeriesData,
         ),
       ),
     );
   }
 
-  Future<void> _onFetchTopRatedTvSeries(
-    FetchTopRatedTvSeries event,
-    Emitter<TvSeriesListState> emit,
+  Future<void> _onFetchTopRatedTVSeries(
+    FetchTopRatedTVSeries event,
+    Emitter<TVSeriesListState> emit,
   ) async {
     emit(state.copyWith(topRatedState: RequestState.loading));
-    final result = await getTopRatedTvSeries.execute();
+    final result = await getTopRatedTVSeries.execute();
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -58,18 +58,18 @@ class TvSeriesListBloc extends Bloc<TvSeriesListEvent, TvSeriesListState> {
       (tvSeriesData) => emit(
         state.copyWith(
           topRatedState: RequestState.loaded,
-          topRatedTvSeries: tvSeriesData,
+          topRatedTVSeries: tvSeriesData,
         ),
       ),
     );
   }
 
-  Future<void> _onFetchOnTheAirTvSeries(
-    FetchOnTheAirTvSeries event,
-    Emitter<TvSeriesListState> emit,
+  Future<void> _onFetchOnTheAirTVSeries(
+    FetchOnTheAirTVSeries event,
+    Emitter<TVSeriesListState> emit,
   ) async {
     emit(state.copyWith(onTheAirState: RequestState.loading));
-    final result = await getOnTheAirTvSeries.execute();
+    final result = await getOnTheAirTVSeries.execute();
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -80,7 +80,7 @@ class TvSeriesListBloc extends Bloc<TvSeriesListEvent, TvSeriesListState> {
       (tvSeriesData) => emit(
         state.copyWith(
           onTheAirState: RequestState.loaded,
-          onTheAirTvSeries: tvSeriesData,
+          onTheAirTVSeries: tvSeriesData,
         ),
       ),
     );

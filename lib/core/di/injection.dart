@@ -27,6 +27,7 @@ import 'package:tv_series/domain/usecases/get_top_rated_tv_series.dart';
 import 'package:tv_series/domain/usecases/get_tv_series_detail.dart';
 import 'package:tv_series/domain/usecases/get_tv_series_recommendations.dart';
 import 'package:tv_series/domain/usecases/get_watchlist_status.dart';
+import 'package:tv_series/domain/usecases/get_season_detail.dart';
 import 'package:tv_series/domain/usecases/get_watchlist_tv_series.dart';
 import 'package:tv_series/domain/usecases/remove_watchlist.dart';
 import 'package:tv_series/domain/usecases/save_watchlist.dart';
@@ -44,24 +45,25 @@ final locator = GetIt.instance;
 void init() {
   // BLoC - TV Series
   locator.registerFactory(
-    () => TvSeriesListBloc(
-      getPopularTvSeries: locator(),
-      getTopRatedTvSeries: locator(),
-      getOnTheAirTvSeries: locator(),
+    () => TVSeriesListBloc(
+      getPopularTVSeries: locator(),
+      getTopRatedTVSeries: locator(),
+      getOnTheAirTVSeries: locator(),
     ),
   );
   locator.registerFactory(
-    () => TvSeriesDetailBloc(
-      getTvSeriesDetail: locator(),
-      getTvSeriesRecommendations: locator(),
+    () => TVSeriesDetailBloc(
+      getTVSeriesDetail: locator(),
+      getTVSeriesRecommendations: locator(),
       getWatchlistStatus: locator(),
       saveWatchlist: locator(),
       removeWatchlist: locator(),
+      getSeasonDetail: locator(),
     ),
   );
-  locator.registerFactory(() => TvSeriesSearchBloc(searchTvSeries: locator()));
+  locator.registerFactory(() => TVSeriesSearchBloc(searchTVSeries: locator()));
   locator.registerFactory(
-    () => WatchlistTvSeriesBloc(getWatchlistTvSeries: locator()),
+    () => WatchlistTVSeriesBloc(getWatchlistTVSeries: locator()),
   );
 
   // BLoC - Movies
@@ -87,16 +89,17 @@ void init() {
   );
 
   // Use Cases - TV Series
-  locator.registerLazySingleton(() => GetPopularTvSeries(locator()));
-  locator.registerLazySingleton(() => GetTopRatedTvSeries(locator()));
-  locator.registerLazySingleton(() => GetOnTheAirTvSeries(locator()));
-  locator.registerLazySingleton(() => GetTvSeriesDetail(locator()));
-  locator.registerLazySingleton(() => GetTvSeriesRecommendations(locator()));
-  locator.registerLazySingleton(() => SearchTvSeries(locator()));
+  locator.registerLazySingleton(() => GetPopularTVSeries(locator()));
+  locator.registerLazySingleton(() => GetTopRatedTVSeries(locator()));
+  locator.registerLazySingleton(() => GetOnTheAirTVSeries(locator()));
+  locator.registerLazySingleton(() => GetTVSeriesDetail(locator()));
+  locator.registerLazySingleton(() => GetTVSeriesRecommendations(locator()));
+  locator.registerLazySingleton(() => SearchTVSeries(locator()));
   locator.registerLazySingleton(() => GetWatchlistStatus(locator()));
   locator.registerLazySingleton(() => SaveWatchlist(locator()));
   locator.registerLazySingleton(() => RemoveWatchlist(locator()));
-  locator.registerLazySingleton(() => GetWatchlistTvSeries(locator()));
+  locator.registerLazySingleton(() => GetWatchlistTVSeries(locator()));
+  locator.registerLazySingleton(() => GetSeasonDetail(locator()));
 
   // Use Cases - Movies
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -111,8 +114,8 @@ void init() {
   locator.registerLazySingleton(() => GetWatchlistMovies(locator()));
 
   // Repository - TV Series
-  locator.registerLazySingleton<TvSeriesRepository>(
-    () => TvSeriesRepositoryImpl(
+  locator.registerLazySingleton<TVSeriesRepository>(
+    () => TVSeriesRepositoryImpl(
       remoteDataSource: locator(),
       localDataSource: locator(),
     ),
@@ -127,11 +130,11 @@ void init() {
   );
 
   // Data Sources - TV Series
-  locator.registerLazySingleton<TvSeriesRemoteDataSource>(
-    () => TvSeriesRemoteDataSourceImpl(client: locator()),
+  locator.registerLazySingleton<TVSeriesRemoteDataSource>(
+    () => TVSeriesRemoteDataSourceImpl(client: locator()),
   );
-  locator.registerLazySingleton<TvSeriesLocalDataSource>(
-    () => TvSeriesLocalDataSourceImpl(database: locator()),
+  locator.registerLazySingleton<TVSeriesLocalDataSource>(
+    () => TVSeriesLocalDataSourceImpl(database: locator()),
   );
 
   // Data Sources - Movies

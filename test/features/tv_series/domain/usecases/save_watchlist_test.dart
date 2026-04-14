@@ -15,7 +15,7 @@ void main() {
     usecase = SaveWatchlist(mockTvSeriesRepository);
   });
 
-  const tTvSeriesDetail = TvSeriesDetail(
+  const tTvSeriesDetail = TVSeriesDetail(
     id: 1,
     name: 'Test',
     overview: 'Test Overview',

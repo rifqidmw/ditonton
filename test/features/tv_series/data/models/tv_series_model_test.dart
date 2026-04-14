@@ -3,7 +3,7 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const tTvSeriesModel = TvSeriesModel(
+  const tTvSeriesModel = TVSeriesModel(
     id: 1,
     name: 'Test Name',
     overview: 'Test Overview',
@@ -13,7 +13,7 @@ void main() {
   );
 
   test('should be a subclass of TvSeries entity', () async {
-    expect(tTvSeriesModel, isA<TvSeries>());
+    expect(tTvSeriesModel, isA<TVSeries>());
   });
 
   test('should return a valid model from JSON', () async {
@@ -27,7 +27,7 @@ void main() {
       'backdrop_path': null,
       'first_air_date': null,
     };
-    final result = TvSeriesModel.fromJson(jsonMap);
+    final result = TVSeriesModel.fromJson(jsonMap);
     expect(result, tTvSeriesModel);
   });
 

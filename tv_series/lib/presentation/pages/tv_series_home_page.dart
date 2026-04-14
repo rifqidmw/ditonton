@@ -8,22 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class TvSeriesHomePage extends StatefulWidget {
-  const TvSeriesHomePage({super.key});
+class TVSeriesHomePage extends StatefulWidget {
+  const TVSeriesHomePage({super.key});
 
   @override
-  State<TvSeriesHomePage> createState() => _TvSeriesHomePageState();
+  State<TVSeriesHomePage> createState() => _TVSeriesHomePageState();
 }
 
-class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
+class _TVSeriesHomePageState extends State<TVSeriesHomePage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
       if (!mounted) return;
-      context.read<TvSeriesListBloc>().add(FetchPopularTvSeries());
-      context.read<TvSeriesListBloc>().add(FetchTopRatedTvSeries());
-      context.read<TvSeriesListBloc>().add(FetchOnTheAirTvSeries());
+      context.read<TVSeriesListBloc>().add(FetchPopularTVSeries());
+      context.read<TVSeriesListBloc>().add(FetchTopRatedTVSeries());
+      context.read<TVSeriesListBloc>().add(FetchOnTheAirTVSeries());
     });
   }
 
@@ -51,12 +51,12 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
                 'Now Playing',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              BlocBuilder<TvSeriesListBloc, TvSeriesListState>(
+              BlocBuilder<TVSeriesListBloc, TVSeriesListState>(
                 builder: (context, state) {
                   if (state.onTheAirState == RequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state.onTheAirState == RequestState.loaded) {
-                    return TvSeriesList(state.onTheAirTvSeries);
+                    return TVSeriesList(state.onTheAirTVSeries);
                   } else if (state.onTheAirState == RequestState.error) {
                     return Center(child: Text(state.onTheAirMessage));
                   } else {
@@ -68,12 +68,12 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
                 title: 'Popular',
                 onTap: () => context.push('/tv-series/popular'),
               ),
-              BlocBuilder<TvSeriesListBloc, TvSeriesListState>(
+              BlocBuilder<TVSeriesListBloc, TVSeriesListState>(
                 builder: (context, state) {
                   if (state.popularState == RequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state.popularState == RequestState.loaded) {
-                    return TvSeriesList(state.popularTvSeries);
+                    return TVSeriesList(state.popularTVSeries);
                   } else if (state.popularState == RequestState.error) {
                     return Center(child: Text(state.popularMessage));
                   } else {
@@ -85,12 +85,12 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
                 title: 'Top Rated',
                 onTap: () => context.push('/tv-series/top-rated'),
               ),
-              BlocBuilder<TvSeriesListBloc, TvSeriesListState>(
+              BlocBuilder<TVSeriesListBloc, TVSeriesListState>(
                 builder: (context, state) {
                   if (state.topRatedState == RequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state.topRatedState == RequestState.loaded) {
-                    return TvSeriesList(state.topRatedTvSeries);
+                    return TVSeriesList(state.topRatedTVSeries);
                   } else if (state.topRatedState == RequestState.error) {
                     return Center(child: Text(state.topRatedMessage));
                   } else {
@@ -124,10 +124,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
   }
 }
 
-class TvSeriesList extends StatelessWidget {
-  final List<TvSeries> tvSeriesList;
+class TVSeriesList extends StatelessWidget {
+  final List<TVSeries> tvSeriesList;
 
-  const TvSeriesList(this.tvSeriesList, {super.key});
+  const TVSeriesList(this.tvSeriesList, {super.key});
 
   @override
   Widget build(BuildContext context) {

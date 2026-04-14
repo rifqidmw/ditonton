@@ -3,12 +3,12 @@ import 'package:core/error/failures.dart';
 import 'package:tv_series/domain/entities/tv_series_detail.dart';
 import 'package:tv_series/domain/repositories/tv_series_repository.dart';
 
-class GetTVSeriesDetail {
+class GetSeasonDetail {
   final TVSeriesRepository repository;
 
-  GetTVSeriesDetail(this.repository);
+  GetSeasonDetail(this.repository);
 
-  Future<Either<Failure, TVSeriesDetail>> execute(int id) {
-    return repository.getTVSeriesDetail(id);
+  Future<Either<Failure, SeasonDetail>> execute(int tvId, int seasonNumber) {
+    return repository.getSeasonDetail(tvId, seasonNumber);
   }
 }

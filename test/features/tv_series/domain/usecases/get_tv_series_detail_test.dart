@@ -7,16 +7,16 @@ import 'package:mockito/mockito.dart';
 import 'get_popular_tv_series_test.mocks.dart';
 
 void main() {
-  late GetTvSeriesDetail usecase;
+  late GetTVSeriesDetail usecase;
   late MockTvSeriesRepository mockTvSeriesRepository;
 
   setUp(() {
     mockTvSeriesRepository = MockTvSeriesRepository();
-    usecase = GetTvSeriesDetail(mockTvSeriesRepository);
+    usecase = GetTVSeriesDetail(mockTvSeriesRepository);
   });
 
   const tId = 1;
-  const tTvSeriesDetail = TvSeriesDetail(
+  const tTvSeriesDetail = TVSeriesDetail(
     id: 1,
     name: 'Test',
     overview: 'Test Overview',
@@ -30,11 +30,11 @@ void main() {
 
   test('should get tv series detail from the repository', () async {
     when(
-      mockTvSeriesRepository.getTvSeriesDetail(tId),
+      mockTvSeriesRepository.getTVSeriesDetail(tId),
     ).thenAnswer((_) async => const Right(tTvSeriesDetail));
     final result = await usecase.execute(tId);
     expect(result, const Right(tTvSeriesDetail));
-    verify(mockTvSeriesRepository.getTvSeriesDetail(tId));
+    verify(mockTvSeriesRepository.getTVSeriesDetail(tId));
     verifyNoMoreInteractions(mockTvSeriesRepository);
   });
 }

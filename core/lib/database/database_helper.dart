@@ -18,7 +18,7 @@ class DatabaseHelper {
     return _database!;
   }
 
-  static const String _tblWatchlistTv = 'watchlist_tv';
+  static const String _tblWatchlistTV = 'watchlist_tv';
   static const String _tblWatchlistMovies = 'watchlist_movies';
 
   Future<Database> _initDb() async {
@@ -35,7 +35,7 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $_tblWatchlistTv (
+      CREATE TABLE $_tblWatchlistTV (
         id INTEGER PRIMARY KEY,
         name TEXT,
         posterPath TEXT,

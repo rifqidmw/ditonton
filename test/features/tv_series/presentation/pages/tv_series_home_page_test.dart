@@ -10,14 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockTvSeriesListBloc
-    extends MockBloc<TvSeriesListEvent, TvSeriesListState>
-    implements TvSeriesListBloc {}
+    extends MockBloc<TVSeriesListEvent, TVSeriesListState>
+    implements TVSeriesListBloc {}
 
 void main() {
   late MockTvSeriesListBloc mockBloc;
 
   final testTvSeries = [
-    TvSeries(
+    TVSeries(
       id: 1,
       name: 'Test Series',
       overview: 'Overview 1',
@@ -25,7 +25,7 @@ void main() {
       voteAverage: 8.5,
       genreIds: const [18],
     ),
-    TvSeries(
+    TVSeries(
       id: 2,
       name: 'Another Series',
       overview: 'Overview 2',
@@ -41,15 +41,15 @@ void main() {
 
   Widget makeTestableWidget() {
     return MaterialApp(
-      home: BlocProvider<TvSeriesListBloc>(
+      home: BlocProvider<TVSeriesListBloc>(
         create: (_) => mockBloc,
-        child: const TvSeriesHomePage(),
+        child: const TVSeriesHomePage(),
       ),
     );
   }
 
   testWidgets('should display app title in AppBar', (tester) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesListState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesListState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -57,7 +57,7 @@ void main() {
   });
 
   testWidgets('should display search icon', (tester) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesListState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesListState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -65,7 +65,7 @@ void main() {
   });
 
   testWidgets('should display section headings', (tester) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesListState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesListState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -77,7 +77,7 @@ void main() {
   testWidgets('should display "See More" buttons for Popular and Top Rated', (
     tester,
   ) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesListState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesListState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -89,7 +89,7 @@ void main() {
   ) async {
     when(
       () => mockBloc.state,
-    ).thenReturn(const TvSeriesListState(onTheAirState: RequestState.loading));
+    ).thenReturn(const TVSeriesListState(onTheAirState: RequestState.loading));
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -101,7 +101,7 @@ void main() {
   ) async {
     when(
       () => mockBloc.state,
-    ).thenReturn(const TvSeriesListState(popularState: RequestState.loading));
+    ).thenReturn(const TVSeriesListState(popularState: RequestState.loading));
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -113,7 +113,7 @@ void main() {
   ) async {
     when(
       () => mockBloc.state,
-    ).thenReturn(const TvSeriesListState(topRatedState: RequestState.loading));
+    ).thenReturn(const TVSeriesListState(topRatedState: RequestState.loading));
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -124,53 +124,53 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      TvSeriesListState(
+      TVSeriesListState(
         onTheAirState: RequestState.loaded,
-        onTheAirTvSeries: testTvSeries,
+        onTheAirTVSeries: testTvSeries,
       ),
     );
 
     await tester.pumpWidget(makeTestableWidget());
     await tester.pump();
 
-    expect(find.byType(TvSeriesList), findsOneWidget);
+    expect(find.byType(TVSeriesList), findsOneWidget);
   });
 
   testWidgets('should show popular tv series list when loaded', (tester) async {
     when(() => mockBloc.state).thenReturn(
-      TvSeriesListState(
+      TVSeriesListState(
         popularState: RequestState.loaded,
-        popularTvSeries: testTvSeries,
+        popularTVSeries: testTvSeries,
       ),
     );
 
     await tester.pumpWidget(makeTestableWidget());
     await tester.pump();
 
-    expect(find.byType(TvSeriesList), findsOneWidget);
+    expect(find.byType(TVSeriesList), findsOneWidget);
   });
 
   testWidgets('should show top rated tv series list when loaded', (
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      TvSeriesListState(
+      TVSeriesListState(
         topRatedState: RequestState.loaded,
-        topRatedTvSeries: testTvSeries,
+        topRatedTVSeries: testTvSeries,
       ),
     );
 
     await tester.pumpWidget(makeTestableWidget());
     await tester.pump();
 
-    expect(find.byType(TvSeriesList), findsOneWidget);
+    expect(find.byType(TVSeriesList), findsOneWidget);
   });
 
   testWidgets('should show error text when onTheAir state is error', (
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      const TvSeriesListState(
+      const TVSeriesListState(
         onTheAirState: RequestState.error,
         onTheAirMessage: 'Failed to load on the air',
       ),
@@ -185,7 +185,7 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      const TvSeriesListState(
+      const TVSeriesListState(
         popularState: RequestState.error,
         popularMessage: 'Failed to load popular',
       ),
@@ -200,7 +200,7 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      const TvSeriesListState(
+      const TVSeriesListState(
         topRatedState: RequestState.error,
         topRatedMessage: 'Failed to load top rated',
       ),

@@ -10,14 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockTvSeriesSearchBloc
-    extends MockBloc<TvSeriesSearchEvent, TvSeriesSearchState>
-    implements TvSeriesSearchBloc {}
+    extends MockBloc<TVSeriesSearchEvent, TVSeriesSearchState>
+    implements TVSeriesSearchBloc {}
 
 void main() {
   late MockTvSeriesSearchBloc mockBloc;
 
   final testTvSeries = [
-    TvSeries(
+    TVSeries(
       id: 1,
       name: 'Search Result 1',
       overview: 'Overview 1',
@@ -25,7 +25,7 @@ void main() {
       voteAverage: 8.5,
       genreIds: const [18],
     ),
-    TvSeries(
+    TVSeries(
       id: 2,
       name: 'Search Result 2',
       overview: 'Overview 2',
@@ -41,15 +41,15 @@ void main() {
 
   Widget makeTestableWidget() {
     return MaterialApp(
-      home: BlocProvider<TvSeriesSearchBloc>(
+      home: BlocProvider<TVSeriesSearchBloc>(
         create: (_) => mockBloc,
-        child: const TvSeriesSearchPage(),
+        child: const TVSeriesSearchPage(),
       ),
     );
   }
 
   testWidgets('should display AppBar with Search title', (tester) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesSearchState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesSearchState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -58,7 +58,7 @@ void main() {
   });
 
   testWidgets('should display search text field', (tester) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesSearchState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesSearchState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -67,7 +67,7 @@ void main() {
   });
 
   testWidgets('should show initial prompt when state is empty', (tester) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesSearchState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesSearchState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -79,7 +79,7 @@ void main() {
   ) async {
     when(
       () => mockBloc.state,
-    ).thenReturn(const TvSeriesSearchState(state: RequestState.loading));
+    ).thenReturn(const TVSeriesSearchState(state: RequestState.loading));
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -90,7 +90,7 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      TvSeriesSearchState(
+      TVSeriesSearchState(
         state: RequestState.loaded,
         searchResult: testTvSeries,
       ),
@@ -108,7 +108,7 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      const TvSeriesSearchState(state: RequestState.loaded, searchResult: []),
+      const TVSeriesSearchState(state: RequestState.loaded, searchResult: []),
     );
 
     await tester.pumpWidget(makeTestableWidget());
@@ -118,7 +118,7 @@ void main() {
 
   testWidgets('should show error message when state is error', (tester) async {
     when(() => mockBloc.state).thenReturn(
-      const TvSeriesSearchState(
+      const TVSeriesSearchState(
         state: RequestState.error,
         message: 'Failed to search',
       ),
@@ -133,7 +133,7 @@ void main() {
   testWidgets('should dispatch OnQueryChanged when text is entered', (
     tester,
   ) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesSearchState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesSearchState());
 
     await tester.pumpWidget(makeTestableWidget());
 

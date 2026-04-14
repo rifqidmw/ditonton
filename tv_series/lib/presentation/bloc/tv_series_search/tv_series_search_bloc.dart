@@ -4,12 +4,12 @@ import 'package:tv_series/presentation/bloc/tv_series_search/tv_series_search_ev
 import 'package:tv_series/presentation/bloc/tv_series_search/tv_series_search_state.dart';
 import 'package:rxdart/rxdart.dart';
 
-class TvSeriesSearchBloc
-    extends Bloc<TvSeriesSearchEvent, TvSeriesSearchState> {
-  final SearchTvSeries searchTvSeries;
+class TVSeriesSearchBloc
+    extends Bloc<TVSeriesSearchEvent, TVSeriesSearchState> {
+  final SearchTVSeries searchTVSeries;
 
-  TvSeriesSearchBloc({required this.searchTvSeries})
-    : super(const TvSeriesSearchState()) {
+  TVSeriesSearchBloc({required this.searchTVSeries})
+    : super(const TVSeriesSearchState()) {
     on<OnQueryChanged>(
       _onQueryChanged,
       transformer: debounce(const Duration(milliseconds: 500)),
@@ -18,7 +18,7 @@ class TvSeriesSearchBloc
 
   Future<void> _onQueryChanged(
     OnQueryChanged event,
-    Emitter<TvSeriesSearchState> emit,
+    Emitter<TVSeriesSearchState> emit,
   ) async {
     final query = event.query;
 
@@ -29,7 +29,7 @@ class TvSeriesSearchBloc
 
     emit(state.copyWith(state: RequestState.loading));
 
-    final result = await searchTvSeries.execute(query);
+    final result = await searchTVSeries.execute(query);
 
     result.fold(
       (failure) => emit(

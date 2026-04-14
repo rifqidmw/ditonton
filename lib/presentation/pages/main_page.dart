@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
       body: IndexedStack(
         index: _currentIndex,
         children: const [
-          TvSeriesHomePage(),
+          TVSeriesHomePage(),
           MovieHomePage(),
           _WatchlistPage(),
           AboutPage(),
@@ -63,7 +63,7 @@ class _WatchlistPage extends StatelessWidget {
           ),
         ),
         body: const TabBarView(
-          children: [WatchlistTvSeriesBodyContent(), WatchlistMoviePage()],
+          children: [WatchlistTVSeriesBodyContent(), WatchlistMoviePage()],
         ),
       ),
     );

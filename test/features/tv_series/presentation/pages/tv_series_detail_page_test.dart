@@ -5,19 +5,20 @@ import 'package:tv_series/presentation/bloc/tv_series_detail/tv_series_detail_bl
 import 'package:tv_series/presentation/bloc/tv_series_detail/tv_series_detail_event.dart';
 import 'package:tv_series/presentation/bloc/tv_series_detail/tv_series_detail_state.dart';
 import 'package:tv_series/presentation/pages/tv_series_detail_page.dart';
+import 'package:tv_series/presentation/widgets/detail_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockTvSeriesDetailBloc
-    extends MockBloc<TvSeriesDetailEvent, TvSeriesDetailState>
-    implements TvSeriesDetailBloc {}
+    extends MockBloc<TVSeriesDetailEvent, TVSeriesDetailState>
+    implements TVSeriesDetailBloc {}
 
 void main() {
   late MockTvSeriesDetailBloc mockBloc;
 
-  const testTvSeriesDetail = TvSeriesDetail(
+  const testTvSeriesDetail = TVSeriesDetail(
     id: 1,
     name: 'Test Series',
     overview: 'Test overview',
@@ -32,7 +33,7 @@ void main() {
   );
 
   final testRecommendations = [
-    TvSeries(
+    TVSeries(
       id: 2,
       name: 'Recommended Series',
       overview: 'Recommendation overview',
@@ -44,15 +45,15 @@ void main() {
 
   setUp(() {
     mockBloc = MockTvSeriesDetailBloc();
-    registerFallbackValue(const FetchTvSeriesDetail(1));
+    registerFallbackValue(const FetchTVSeriesDetail(1));
     registerFallbackValue(const LoadWatchlistStatus(1));
   });
 
   Widget makeTestableWidget(int id) {
     return MaterialApp(
-      home: BlocProvider<TvSeriesDetailBloc>(
+      home: BlocProvider<TVSeriesDetailBloc>(
         create: (_) => mockBloc,
-        child: TvSeriesDetailPage(id: id),
+        child: TVSeriesDetailPage(id: id),
       ),
     );
   }
@@ -68,7 +69,7 @@ void main() {
   ) async {
     when(
       () => mockBloc.state,
-    ).thenReturn(const TvSeriesDetailState(detailState: RequestState.loading));
+    ).thenReturn(const TVSeriesDetailState(detailState: RequestState.loading));
 
     await tester.pumpWidget(makeTestableWidget(1));
 
@@ -79,7 +80,7 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      const TvSeriesDetailState(
+      const TVSeriesDetailState(
         detailState: RequestState.error,
         detailMessage: 'Failed to load detail',
       ),
@@ -95,7 +96,7 @@ void main() {
   ) async {
     setLargeScreen(tester);
     when(() => mockBloc.state).thenReturn(
-      TvSeriesDetailState(
+      TVSeriesDetailState(
         detailState: RequestState.loaded,
         tvSeriesDetail: testTvSeriesDetail,
         recommendations: testRecommendations,
@@ -113,7 +114,7 @@ void main() {
   testWidgets('should show add icon when not in watchlist', (tester) async {
     setLargeScreen(tester);
     when(() => mockBloc.state).thenReturn(
-      TvSeriesDetailState(
+      TVSeriesDetailState(
         detailState: RequestState.loaded,
         tvSeriesDetail: testTvSeriesDetail,
         isAddedToWatchlist: false,
@@ -131,7 +132,7 @@ void main() {
   ) async {
     setLargeScreen(tester);
     when(() => mockBloc.state).thenReturn(
-      TvSeriesDetailState(
+      TVSeriesDetailState(
         detailState: RequestState.loaded,
         tvSeriesDetail: testTvSeriesDetail,
         isAddedToWatchlist: true,
@@ -147,7 +148,7 @@ void main() {
   testWidgets('should show overview text in detail content', (tester) async {
     setLargeScreen(tester);
     when(() => mockBloc.state).thenReturn(
-      TvSeriesDetailState(
+      TVSeriesDetailState(
         detailState: RequestState.loaded,
         tvSeriesDetail: testTvSeriesDetail,
         isAddedToWatchlist: false,
@@ -166,7 +167,7 @@ void main() {
   ) async {
     setLargeScreen(tester);
     when(() => mockBloc.state).thenReturn(
-      TvSeriesDetailState(
+      TVSeriesDetailState(
         detailState: RequestState.loaded,
         tvSeriesDetail: testTvSeriesDetail,
         isAddedToWatchlist: false,
@@ -187,7 +188,7 @@ void main() {
   ) async {
     setLargeScreen(tester);
     when(() => mockBloc.state).thenReturn(
-      TvSeriesDetailState(
+      TVSeriesDetailState(
         detailState: RequestState.loaded,
         tvSeriesDetail: testTvSeriesDetail,
         isAddedToWatchlist: true,
@@ -212,20 +213,20 @@ void main() {
     whenListen(
       mockBloc,
       Stream.fromIterable([
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loaded,
           tvSeriesDetail: testTvSeriesDetail,
           isAddedToWatchlist: false,
           watchlistMessage: '',
         ),
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loaded,
           tvSeriesDetail: testTvSeriesDetail,
           isAddedToWatchlist: true,
           watchlistMessage: 'Added to Watchlist',
         ),
       ]),
-      initialState: const TvSeriesDetailState(
+      initialState: const TVSeriesDetailState(
         detailState: RequestState.loaded,
         tvSeriesDetail: testTvSeriesDetail,
         isAddedToWatchlist: false,

@@ -3,29 +3,29 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 
 enum RequestState { empty, loading, loaded, error }
 
-class WatchlistTvSeriesState extends Equatable {
+class WatchlistTVSeriesState extends Equatable {
   final RequestState state;
-  final List<TvSeries> watchlistTvSeries;
+  final List<TVSeries> watchlistTVSeries;
   final String message;
 
-  const WatchlistTvSeriesState({
+  const WatchlistTVSeriesState({
     this.state = RequestState.empty,
-    this.watchlistTvSeries = const [],
+    this.watchlistTVSeries = const [],
     this.message = '',
   });
 
-  WatchlistTvSeriesState copyWith({
+  WatchlistTVSeriesState copyWith({
     RequestState? state,
-    List<TvSeries>? watchlistTvSeries,
+    List<TVSeries>? watchlistTVSeries,
     String? message,
   }) {
-    return WatchlistTvSeriesState(
+    return WatchlistTVSeriesState(
       state: state ?? this.state,
-      watchlistTvSeries: watchlistTvSeries ?? this.watchlistTvSeries,
+      watchlistTVSeries: watchlistTVSeries ?? this.watchlistTVSeries,
       message: message ?? this.message,
     );
   }
 
   @override
-  List<Object?> get props => [state, watchlistTvSeries, message];
+  List<Object?> get props => [state, watchlistTVSeries, message];
 }

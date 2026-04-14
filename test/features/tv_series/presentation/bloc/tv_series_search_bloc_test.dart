@@ -9,14 +9,14 @@ import 'package:tv_series/presentation/bloc/tv_series_search/tv_series_search_st
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockSearchTvSeries extends Mock implements SearchTvSeries {}
+class MockSearchTvSeries extends Mock implements SearchTVSeries {}
 
 void main() {
-  late TvSeriesSearchBloc bloc;
+  late TVSeriesSearchBloc bloc;
   late MockSearchTvSeries mockSearchTvSeries;
 
   final tResults = [
-    TvSeries(
+    TVSeries(
       id: 1,
       name: 'Search Result',
       overview: 'Overview',
@@ -28,27 +28,27 @@ void main() {
 
   setUp(() {
     mockSearchTvSeries = MockSearchTvSeries();
-    bloc = TvSeriesSearchBloc(searchTvSeries: mockSearchTvSeries);
+    bloc = TVSeriesSearchBloc(searchTVSeries: mockSearchTvSeries);
   });
 
   tearDown(() => bloc.close());
 
   test('initial state should be TvSeriesSearchState empty', () {
-    expect(bloc.state, const TvSeriesSearchState());
+    expect(bloc.state, const TVSeriesSearchState());
   });
 
   group('OnQueryChanged', () {
-    blocTest<TvSeriesSearchBloc, TvSeriesSearchState>(
+    blocTest<TVSeriesSearchBloc, TVSeriesSearchState>(
       'should emit [empty] when query is empty',
       build: () => bloc,
       act: (b) => b.add(const OnQueryChanged('')),
       wait: const Duration(milliseconds: 600),
       expect: () => [
-        const TvSeriesSearchState(state: RequestState.empty, searchResult: []),
+        const TVSeriesSearchState(state: RequestState.empty, searchResult: []),
       ],
     );
 
-    blocTest<TvSeriesSearchBloc, TvSeriesSearchState>(
+    blocTest<TVSeriesSearchBloc, TVSeriesSearchState>(
       'should emit [loading, loaded] when search succeeds',
       build: () {
         when(
@@ -59,12 +59,12 @@ void main() {
       act: (b) => b.add(const OnQueryChanged('test')),
       wait: const Duration(milliseconds: 600),
       expect: () => [
-        const TvSeriesSearchState(state: RequestState.loading),
-        TvSeriesSearchState(state: RequestState.loaded, searchResult: tResults),
+        const TVSeriesSearchState(state: RequestState.loading),
+        TVSeriesSearchState(state: RequestState.loaded, searchResult: tResults),
       ],
     );
 
-    blocTest<TvSeriesSearchBloc, TvSeriesSearchState>(
+    blocTest<TVSeriesSearchBloc, TVSeriesSearchState>(
       'should emit [loading, error] when search fails with server error',
       build: () {
         when(
@@ -75,15 +75,15 @@ void main() {
       act: (b) => b.add(const OnQueryChanged('test')),
       wait: const Duration(milliseconds: 600),
       expect: () => [
-        const TvSeriesSearchState(state: RequestState.loading),
-        const TvSeriesSearchState(
+        const TVSeriesSearchState(state: RequestState.loading),
+        const TVSeriesSearchState(
           state: RequestState.error,
           message: 'Server Error',
         ),
       ],
     );
 
-    blocTest<TvSeriesSearchBloc, TvSeriesSearchState>(
+    blocTest<TVSeriesSearchBloc, TVSeriesSearchState>(
       'should emit [loading, error] on connection failure',
       build: () {
         when(
@@ -94,15 +94,15 @@ void main() {
       act: (b) => b.add(const OnQueryChanged('test')),
       wait: const Duration(milliseconds: 600),
       expect: () => [
-        const TvSeriesSearchState(state: RequestState.loading),
-        const TvSeriesSearchState(
+        const TVSeriesSearchState(state: RequestState.loading),
+        const TVSeriesSearchState(
           state: RequestState.error,
           message: 'No internet',
         ),
       ],
     );
 
-    blocTest<TvSeriesSearchBloc, TvSeriesSearchState>(
+    blocTest<TVSeriesSearchBloc, TVSeriesSearchState>(
       'should emit [loading, loaded] with empty list when no results',
       build: () {
         when(
@@ -113,8 +113,8 @@ void main() {
       act: (b) => b.add(const OnQueryChanged('unknown')),
       wait: const Duration(milliseconds: 600),
       expect: () => [
-        const TvSeriesSearchState(state: RequestState.loading),
-        const TvSeriesSearchState(state: RequestState.loaded, searchResult: []),
+        const TVSeriesSearchState(state: RequestState.loading),
+        const TVSeriesSearchState(state: RequestState.loaded, searchResult: []),
       ],
     );
   });

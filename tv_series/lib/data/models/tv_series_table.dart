@@ -1,27 +1,27 @@
 import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:tv_series/domain/entities/tv_series_detail.dart';
 
-class TvSeriesTable {
+class TVSeriesTable {
   final int id;
   final String name;
   final String? posterPath;
   final String overview;
 
-  TvSeriesTable({
+  TVSeriesTable({
     required this.id,
     required this.name,
     required this.posterPath,
     required this.overview,
   });
 
-  factory TvSeriesTable.fromEntity(TvSeriesDetail tvSeries) => TvSeriesTable(
+  factory TVSeriesTable.fromEntity(TVSeriesDetail tvSeries) => TVSeriesTable(
     id: tvSeries.id,
     name: tvSeries.name,
     posterPath: tvSeries.posterPath,
     overview: tvSeries.overview,
   );
 
-  factory TvSeriesTable.fromMap(Map<String, dynamic> map) => TvSeriesTable(
+  factory TVSeriesTable.fromMap(Map<String, dynamic> map) => TVSeriesTable(
     id: map['id'],
     name: map['name'],
     posterPath: map['posterPath'],
@@ -35,7 +35,7 @@ class TvSeriesTable {
     'overview': overview,
   };
 
-  TvSeries toEntity() => TvSeries(
+  TVSeries toEntity() => TVSeries(
     id: id,
     name: name,
     posterPath: posterPath,

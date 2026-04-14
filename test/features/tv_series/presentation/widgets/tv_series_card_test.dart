@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final testTvSeries = TvSeries(
+  final testTvSeries = TVSeries(
     id: 1,
     name: 'Test Series',
     overview: 'A great overview of this series.',
@@ -19,7 +19,7 @@ void main() {
 
   testWidgets('should display tv series name', (tester) async {
     await tester.pumpWidget(
-      makeTestableWidget(TvSeriesCard(tvSeries: testTvSeries)),
+      makeTestableWidget(TVSeriesCard(tvSeries: testTvSeries)),
     );
 
     expect(find.text('Test Series'), findsOneWidget);
@@ -27,7 +27,7 @@ void main() {
 
   testWidgets('should display tv series overview', (tester) async {
     await tester.pumpWidget(
-      makeTestableWidget(TvSeriesCard(tvSeries: testTvSeries)),
+      makeTestableWidget(TVSeriesCard(tvSeries: testTvSeries)),
     );
 
     expect(find.text('A great overview of this series.'), findsOneWidget);
@@ -38,7 +38,7 @@ void main() {
 
     await tester.pumpWidget(
       makeTestableWidget(
-        TvSeriesCard(tvSeries: testTvSeries, onTap: () => tapped = true),
+        TVSeriesCard(tvSeries: testTvSeries, onTap: () => tapped = true),
       ),
     );
 
@@ -52,7 +52,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      makeTestableWidget(TvSeriesCard(tvSeries: testTvSeries)),
+      makeTestableWidget(TVSeriesCard(tvSeries: testTvSeries)),
     );
 
     expect(find.byType(GestureDetector), findsOneWidget);
@@ -62,7 +62,7 @@ void main() {
   testWidgets('should show placeholder when posterPath is null', (
     tester,
   ) async {
-    final seriesWithNoPoster = TvSeries(
+    final seriesWithNoPoster = TVSeries(
       id: 2,
       name: 'No Poster',
       overview: 'No poster overview',
@@ -72,7 +72,7 @@ void main() {
     );
 
     await tester.pumpWidget(
-      makeTestableWidget(TvSeriesCard(tvSeries: seriesWithNoPoster)),
+      makeTestableWidget(TVSeriesCard(tvSeries: seriesWithNoPoster)),
     );
 
     expect(find.byType(Container), findsWidgets);

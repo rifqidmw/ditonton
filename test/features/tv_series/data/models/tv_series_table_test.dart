@@ -4,14 +4,14 @@ import 'package:tv_series/domain/entities/tv_series_detail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tvSeriesTable = TvSeriesTable(
+  final tvSeriesTable = TVSeriesTable(
     id: 1,
     name: 'Test TV Series',
     posterPath: '/test.jpg',
     overview: 'Test overview',
   );
 
-  const tvSeriesDetail = TvSeriesDetail(
+  const tvSeriesDetail = TVSeriesDetail(
     id: 1,
     name: 'Test TV Series',
     posterPath: '/test.jpg',
@@ -28,7 +28,7 @@ void main() {
 
   group('TvSeriesTable', () {
     test('fromEntity should return a valid TvSeriesTable', () {
-      final result = TvSeriesTable.fromEntity(tvSeriesDetail);
+      final result = TVSeriesTable.fromEntity(tvSeriesDetail);
 
       expect(result.id, tvSeriesDetail.id);
       expect(result.name, tvSeriesDetail.name);
@@ -44,9 +44,9 @@ void main() {
         'overview': 'Test overview',
       };
 
-      final result = TvSeriesTable.fromMap(map);
+      final result = TVSeriesTable.fromMap(map);
 
-      expect(result, isA<TvSeriesTable>());
+      expect(result, isA<TVSeriesTable>());
       expect(result.id, 1);
       expect(result.name, 'Test TV Series');
       expect(result.posterPath, '/test.jpg');
@@ -61,7 +61,7 @@ void main() {
         'overview': 'Test overview',
       };
 
-      final result = TvSeriesTable.fromMap(map);
+      final result = TVSeriesTable.fromMap(map);
 
       expect(result.posterPath, null);
     });
@@ -82,7 +82,7 @@ void main() {
     test('toEntity should return TvSeries entity', () {
       final result = tvSeriesTable.toEntity();
 
-      expect(result, isA<TvSeries>());
+      expect(result, isA<TVSeries>());
       expect(result.id, tvSeriesTable.id);
       expect(result.name, tvSeriesTable.name);
       expect(result.posterPath, tvSeriesTable.posterPath);

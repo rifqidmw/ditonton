@@ -3,51 +3,51 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 
 enum RequestState { empty, loading, loaded, error }
 
-class TvSeriesListState extends Equatable {
+class TVSeriesListState extends Equatable {
   final RequestState popularState;
-  final List<TvSeries> popularTvSeries;
+  final List<TVSeries> popularTVSeries;
   final String popularMessage;
 
   final RequestState topRatedState;
-  final List<TvSeries> topRatedTvSeries;
+  final List<TVSeries> topRatedTVSeries;
   final String topRatedMessage;
 
   final RequestState onTheAirState;
-  final List<TvSeries> onTheAirTvSeries;
+  final List<TVSeries> onTheAirTVSeries;
   final String onTheAirMessage;
 
-  const TvSeriesListState({
+  const TVSeriesListState({
     this.popularState = RequestState.empty,
-    this.popularTvSeries = const [],
+    this.popularTVSeries = const [],
     this.popularMessage = '',
     this.topRatedState = RequestState.empty,
-    this.topRatedTvSeries = const [],
+    this.topRatedTVSeries = const [],
     this.topRatedMessage = '',
     this.onTheAirState = RequestState.empty,
-    this.onTheAirTvSeries = const [],
+    this.onTheAirTVSeries = const [],
     this.onTheAirMessage = '',
   });
 
-  TvSeriesListState copyWith({
+  TVSeriesListState copyWith({
     RequestState? popularState,
-    List<TvSeries>? popularTvSeries,
+    List<TVSeries>? popularTVSeries,
     String? popularMessage,
     RequestState? topRatedState,
-    List<TvSeries>? topRatedTvSeries,
+    List<TVSeries>? topRatedTVSeries,
     String? topRatedMessage,
     RequestState? onTheAirState,
-    List<TvSeries>? onTheAirTvSeries,
+    List<TVSeries>? onTheAirTVSeries,
     String? onTheAirMessage,
   }) {
-    return TvSeriesListState(
+    return TVSeriesListState(
       popularState: popularState ?? this.popularState,
-      popularTvSeries: popularTvSeries ?? this.popularTvSeries,
+      popularTVSeries: popularTVSeries ?? this.popularTVSeries,
       popularMessage: popularMessage ?? this.popularMessage,
       topRatedState: topRatedState ?? this.topRatedState,
-      topRatedTvSeries: topRatedTvSeries ?? this.topRatedTvSeries,
+      topRatedTVSeries: topRatedTVSeries ?? this.topRatedTVSeries,
       topRatedMessage: topRatedMessage ?? this.topRatedMessage,
       onTheAirState: onTheAirState ?? this.onTheAirState,
-      onTheAirTvSeries: onTheAirTvSeries ?? this.onTheAirTvSeries,
+      onTheAirTVSeries: onTheAirTVSeries ?? this.onTheAirTVSeries,
       onTheAirMessage: onTheAirMessage ?? this.onTheAirMessage,
     );
   }
@@ -55,13 +55,13 @@ class TvSeriesListState extends Equatable {
   @override
   List<Object?> get props => [
     popularState,
-    popularTvSeries,
+    popularTVSeries,
     popularMessage,
     topRatedState,
-    topRatedTvSeries,
+    topRatedTVSeries,
     topRatedMessage,
     onTheAirState,
-    onTheAirTvSeries,
+    onTheAirTVSeries,
     onTheAirMessage,
   ];
 }

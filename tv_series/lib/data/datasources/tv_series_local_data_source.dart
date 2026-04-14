@@ -2,20 +2,20 @@ import 'package:core/error/exceptions.dart' as core_exceptions;
 import 'package:tv_series/data/models/tv_series_table.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract class TvSeriesLocalDataSource {
-  Future<String> insertWatchlist(TvSeriesTable tvSeries);
-  Future<String> removeWatchlist(TvSeriesTable tvSeries);
-  Future<TvSeriesTable?> getTvSeriesById(int id);
-  Future<List<TvSeriesTable>> getWatchlistTvSeries();
+abstract class TVSeriesLocalDataSource {
+  Future<String> insertWatchlist(TVSeriesTable tvSeries);
+  Future<String> removeWatchlist(TVSeriesTable tvSeries);
+  Future<TVSeriesTable?> getTVSeriesById(int id);
+  Future<List<TVSeriesTable>> getWatchlistTVSeries();
 }
 
-class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
+class TVSeriesLocalDataSourceImpl implements TVSeriesLocalDataSource {
   final Database database;
 
-  TvSeriesLocalDataSourceImpl({required this.database});
+  TVSeriesLocalDataSourceImpl({required this.database});
 
   @override
-  Future<String> insertWatchlist(TvSeriesTable tvSeries) async {
+  Future<String> insertWatchlist(TVSeriesTable tvSeries) async {
     try {
       await database.insert('watchlist_tv', tvSeries.toJson());
       return 'Added to Watchlist';
@@ -25,7 +25,7 @@ class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
   }
 
   @override
-  Future<String> removeWatchlist(TvSeriesTable tvSeries) async {
+  Future<String> removeWatchlist(TVSeriesTable tvSeries) async {
     try {
       await database.delete(
         'watchlist_tv',
@@ -39,7 +39,7 @@ class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
   }
 
   @override
-  Future<TvSeriesTable?> getTvSeriesById(int id) async {
+  Future<TVSeriesTable?> getTVSeriesById(int id) async {
     final result = await database.query(
       'watchlist_tv',
       where: 'id = ?',
@@ -47,15 +47,15 @@ class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
     );
 
     if (result.isNotEmpty) {
-      return TvSeriesTable.fromMap(result.first);
+      return TVSeriesTable.fromMap(result.first);
     } else {
       return null;
     }
   }
 
   @override
-  Future<List<TvSeriesTable>> getWatchlistTvSeries() async {
+  Future<List<TVSeriesTable>> getWatchlistTVSeries() async {
     final result = await database.query('watchlist_tv');
-    return result.map((data) => TvSeriesTable.fromMap(data)).toList();
+    return result.map((data) => TVSeriesTable.fromMap(data)).toList();
   }
 }

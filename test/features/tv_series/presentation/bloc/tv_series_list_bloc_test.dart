@@ -11,20 +11,20 @@ import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_state.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockGetPopularTvSeries extends Mock implements GetPopularTvSeries {}
+class MockGetPopularTvSeries extends Mock implements GetPopularTVSeries {}
 
-class MockGetTopRatedTvSeries extends Mock implements GetTopRatedTvSeries {}
+class MockGetTopRatedTvSeries extends Mock implements GetTopRatedTVSeries {}
 
-class MockGetOnTheAirTvSeries extends Mock implements GetOnTheAirTvSeries {}
+class MockGetOnTheAirTvSeries extends Mock implements GetOnTheAirTVSeries {}
 
 void main() {
-  late TvSeriesListBloc bloc;
+  late TVSeriesListBloc bloc;
   late MockGetPopularTvSeries mockGetPopular;
   late MockGetTopRatedTvSeries mockGetTopRated;
   late MockGetOnTheAirTvSeries mockGetOnTheAir;
 
   final tTvSeries = [
-    TvSeries(
+    TVSeries(
       id: 1,
       name: 'Test Series',
       overview: 'Overview',
@@ -38,21 +38,21 @@ void main() {
     mockGetPopular = MockGetPopularTvSeries();
     mockGetTopRated = MockGetTopRatedTvSeries();
     mockGetOnTheAir = MockGetOnTheAirTvSeries();
-    bloc = TvSeriesListBloc(
-      getPopularTvSeries: mockGetPopular,
-      getTopRatedTvSeries: mockGetTopRated,
-      getOnTheAirTvSeries: mockGetOnTheAir,
+    bloc = TVSeriesListBloc(
+      getPopularTVSeries: mockGetPopular,
+      getTopRatedTVSeries: mockGetTopRated,
+      getOnTheAirTVSeries: mockGetOnTheAir,
     );
   });
 
   tearDown(() => bloc.close());
 
   test('initial state should be TvSeriesListState with empty RequestState', () {
-    expect(bloc.state, const TvSeriesListState());
+    expect(bloc.state, const TVSeriesListState());
   });
 
   group('FetchPopularTvSeries', () {
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, loaded] when data is fetched successfully',
       build: () {
         when(
@@ -60,17 +60,17 @@ void main() {
         ).thenAnswer((_) async => Right(tTvSeries));
         return bloc;
       },
-      act: (b) => b.add(FetchPopularTvSeries()),
+      act: (b) => b.add(FetchPopularTVSeries()),
       expect: () => [
-        const TvSeriesListState(popularState: RequestState.loading),
-        TvSeriesListState(
+        const TVSeriesListState(popularState: RequestState.loading),
+        TVSeriesListState(
           popularState: RequestState.loaded,
-          popularTvSeries: tTvSeries,
+          popularTVSeries: tTvSeries,
         ),
       ],
     );
 
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, error] when fetch fails',
       build: () {
         when(
@@ -78,17 +78,17 @@ void main() {
         ).thenAnswer((_) async => const Left(ServerFailure('Server Error')));
         return bloc;
       },
-      act: (b) => b.add(FetchPopularTvSeries()),
+      act: (b) => b.add(FetchPopularTVSeries()),
       expect: () => [
-        const TvSeriesListState(popularState: RequestState.loading),
-        const TvSeriesListState(
+        const TVSeriesListState(popularState: RequestState.loading),
+        const TVSeriesListState(
           popularState: RequestState.error,
           popularMessage: 'Server Error',
         ),
       ],
     );
 
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, error] on connection failure',
       build: () {
         when(
@@ -96,10 +96,10 @@ void main() {
         ).thenAnswer((_) async => const Left(ConnectionFailure('No internet')));
         return bloc;
       },
-      act: (b) => b.add(FetchPopularTvSeries()),
+      act: (b) => b.add(FetchPopularTVSeries()),
       expect: () => [
-        const TvSeriesListState(popularState: RequestState.loading),
-        const TvSeriesListState(
+        const TVSeriesListState(popularState: RequestState.loading),
+        const TVSeriesListState(
           popularState: RequestState.error,
           popularMessage: 'No internet',
         ),
@@ -108,7 +108,7 @@ void main() {
   });
 
   group('FetchTopRatedTvSeries', () {
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, loaded] when data is fetched successfully',
       build: () {
         when(
@@ -116,17 +116,17 @@ void main() {
         ).thenAnswer((_) async => Right(tTvSeries));
         return bloc;
       },
-      act: (b) => b.add(FetchTopRatedTvSeries()),
+      act: (b) => b.add(FetchTopRatedTVSeries()),
       expect: () => [
-        const TvSeriesListState(topRatedState: RequestState.loading),
-        TvSeriesListState(
+        const TVSeriesListState(topRatedState: RequestState.loading),
+        TVSeriesListState(
           topRatedState: RequestState.loaded,
-          topRatedTvSeries: tTvSeries,
+          topRatedTVSeries: tTvSeries,
         ),
       ],
     );
 
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, error] when fetch fails',
       build: () {
         when(
@@ -134,17 +134,17 @@ void main() {
         ).thenAnswer((_) async => const Left(ServerFailure('Server Error')));
         return bloc;
       },
-      act: (b) => b.add(FetchTopRatedTvSeries()),
+      act: (b) => b.add(FetchTopRatedTVSeries()),
       expect: () => [
-        const TvSeriesListState(topRatedState: RequestState.loading),
-        const TvSeriesListState(
+        const TVSeriesListState(topRatedState: RequestState.loading),
+        const TVSeriesListState(
           topRatedState: RequestState.error,
           topRatedMessage: 'Server Error',
         ),
       ],
     );
 
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, error] on database failure',
       build: () {
         when(
@@ -152,10 +152,10 @@ void main() {
         ).thenAnswer((_) async => const Left(DatabaseFailure('DB Error')));
         return bloc;
       },
-      act: (b) => b.add(FetchTopRatedTvSeries()),
+      act: (b) => b.add(FetchTopRatedTVSeries()),
       expect: () => [
-        const TvSeriesListState(topRatedState: RequestState.loading),
-        const TvSeriesListState(
+        const TVSeriesListState(topRatedState: RequestState.loading),
+        const TVSeriesListState(
           topRatedState: RequestState.error,
           topRatedMessage: 'DB Error',
         ),
@@ -164,7 +164,7 @@ void main() {
   });
 
   group('FetchOnTheAirTvSeries', () {
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, loaded] when data is fetched successfully',
       build: () {
         when(
@@ -172,17 +172,17 @@ void main() {
         ).thenAnswer((_) async => Right(tTvSeries));
         return bloc;
       },
-      act: (b) => b.add(FetchOnTheAirTvSeries()),
+      act: (b) => b.add(FetchOnTheAirTVSeries()),
       expect: () => [
-        const TvSeriesListState(onTheAirState: RequestState.loading),
-        TvSeriesListState(
+        const TVSeriesListState(onTheAirState: RequestState.loading),
+        TVSeriesListState(
           onTheAirState: RequestState.loaded,
-          onTheAirTvSeries: tTvSeries,
+          onTheAirTVSeries: tTvSeries,
         ),
       ],
     );
 
-    blocTest<TvSeriesListBloc, TvSeriesListState>(
+    blocTest<TVSeriesListBloc, TVSeriesListState>(
       'should emit [loading, error] when fetch fails',
       build: () {
         when(
@@ -190,10 +190,10 @@ void main() {
         ).thenAnswer((_) async => const Left(ServerFailure('Server Error')));
         return bloc;
       },
-      act: (b) => b.add(FetchOnTheAirTvSeries()),
+      act: (b) => b.add(FetchOnTheAirTVSeries()),
       expect: () => [
-        const TvSeriesListState(onTheAirState: RequestState.loading),
-        const TvSeriesListState(
+        const TVSeriesListState(onTheAirState: RequestState.loading),
+        const TVSeriesListState(
           onTheAirState: RequestState.error,
           onTheAirMessage: 'Server Error',
         ),

@@ -7,25 +7,25 @@ import 'package:mockito/mockito.dart';
 import 'get_popular_tv_series_test.mocks.dart';
 
 void main() {
-  late GetWatchlistTvSeries usecase;
+  late GetWatchlistTVSeries usecase;
   late MockTvSeriesRepository mockRepository;
 
   setUp(() {
     mockRepository = MockTvSeriesRepository();
-    usecase = GetWatchlistTvSeries(mockRepository);
+    usecase = GetWatchlistTVSeries(mockRepository);
   });
 
-  final tTvSeries = <TvSeries>[];
+  final tTvSeries = <TVSeries>[];
 
   test('should get watchlist tv series from the repository', () async {
     when(
-      mockRepository.getWatchlistTvSeries(),
+      mockRepository.getWatchlistTVSeries(),
     ).thenAnswer((_) async => Right(tTvSeries));
 
     final result = await usecase.execute();
 
     expect(result, Right(tTvSeries));
-    verify(mockRepository.getWatchlistTvSeries());
+    verify(mockRepository.getWatchlistTVSeries());
     verifyNoMoreInteractions(mockRepository);
   });
 }

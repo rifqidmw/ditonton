@@ -7,12 +7,9 @@ import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:core/error/failures.dart' as _i5;
-import 'package:tv_series/domain/entities/tv_series.dart'
-    as _i6;
-import 'package:tv_series/domain/entities/tv_series_detail.dart'
-    as _i7;
-import 'package:tv_series/domain/repositories/tv_series_repository.dart'
-    as _i3;
+import 'package:tv_series/domain/entities/tv_series.dart' as _i6;
+import 'package:tv_series/domain/entities/tv_series_detail.dart' as _i7;
+import 'package:tv_series/domain/repositories/tv_series_repository.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -39,106 +36,106 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockTvSeriesRepository extends _i1.Mock
-    implements _i3.TvSeriesRepository {
+    implements _i3.TVSeriesRepository {
   MockTvSeriesRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>
-  getPopularTvSeries() =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>
+  getPopularTVSeries() =>
       (super.noSuchMethod(
             Invocation.method(#getPopularTvSeries, []),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i6.TvSeries>>(
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i6.TVSeries>>(
                     this,
                     Invocation.method(#getPopularTvSeries, []),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>);
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>
-  getTopRatedTvSeries() =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>
+  getTopRatedTVSeries() =>
       (super.noSuchMethod(
             Invocation.method(#getTopRatedTvSeries, []),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i6.TvSeries>>(
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i6.TVSeries>>(
                     this,
                     Invocation.method(#getTopRatedTvSeries, []),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>);
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>
-  getOnTheAirTvSeries() =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>
+  getOnTheAirTVSeries() =>
       (super.noSuchMethod(
             Invocation.method(#getOnTheAirTvSeries, []),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i6.TvSeries>>(
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i6.TVSeries>>(
                     this,
                     Invocation.method(#getOnTheAirTvSeries, []),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>);
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i7.TvSeriesDetail>> getTvSeriesDetail(
+  _i4.Future<_i2.Either<_i5.Failure, _i7.TVSeriesDetail>> getTVSeriesDetail(
     int? id,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#getTvSeriesDetail, [id]),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, _i7.TvSeriesDetail>>.value(
-                  _FakeEither_0<_i5.Failure, _i7.TvSeriesDetail>(
+                _i4.Future<_i2.Either<_i5.Failure, _i7.TVSeriesDetail>>.value(
+                  _FakeEither_0<_i5.Failure, _i7.TVSeriesDetail>(
                     this,
                     Invocation.method(#getTvSeriesDetail, [id]),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, _i7.TvSeriesDetail>>);
+          as _i4.Future<_i2.Either<_i5.Failure, _i7.TVSeriesDetail>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>
-  getTvSeriesRecommendations(int? id) =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>
+  getTVSeriesRecommendations(int? id) =>
       (super.noSuchMethod(
             Invocation.method(#getTvSeriesRecommendations, [id]),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i6.TvSeries>>(
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i6.TVSeries>>(
                     this,
                     Invocation.method(#getTvSeriesRecommendations, [id]),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>);
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>> searchTvSeries(
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>> searchTVSeries(
     String? query,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#searchTvSeries, [query]),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i6.TvSeries>>(
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i6.TVSeries>>(
                     this,
                     Invocation.method(#searchTvSeries, [query]),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>);
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>);
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, String>> saveWatchlist(
-    _i7.TvSeriesDetail? tvSeries,
+    _i7.TVSeriesDetail? tvSeries,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#saveWatchlist, [tvSeries]),
@@ -153,7 +150,7 @@ class MockTvSeriesRepository extends _i1.Mock
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, String>> removeWatchlist(
-    _i7.TvSeriesDetail? tvSeries,
+    _i7.TVSeriesDetail? tvSeries,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#removeWatchlist, [tvSeries]),
@@ -175,17 +172,17 @@ class MockTvSeriesRepository extends _i1.Mock
           as _i4.Future<bool>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>
-  getWatchlistTvSeries() =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>
+  getWatchlistTVSeries() =>
       (super.noSuchMethod(
             Invocation.method(#getWatchlistTvSeries, []),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i6.TvSeries>>(
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i6.TVSeries>>(
                     this,
                     Invocation.method(#getWatchlistTvSeries, []),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TvSeries>>>);
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.TVSeries>>>);
 }

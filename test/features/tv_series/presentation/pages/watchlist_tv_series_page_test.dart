@@ -10,14 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockWatchlistTvSeriesBloc
-    extends MockBloc<WatchlistTvSeriesEvent, WatchlistTvSeriesState>
-    implements WatchlistTvSeriesBloc {}
+    extends MockBloc<WatchlistTVSeriesEvent, WatchlistTVSeriesState>
+    implements WatchlistTVSeriesBloc {}
 
 void main() {
   late MockWatchlistTvSeriesBloc mockBloc;
 
   final testTvSeries = [
-    TvSeries(
+    TVSeries(
       id: 1,
       name: 'Watchlist Series 1',
       overview: 'Overview 1',
@@ -25,7 +25,7 @@ void main() {
       voteAverage: 8.5,
       genreIds: const [18],
     ),
-    TvSeries(
+    TVSeries(
       id: 2,
       name: 'Watchlist Series 2',
       overview: 'Overview 2',
@@ -41,15 +41,15 @@ void main() {
 
   Widget makeTestableWidget() {
     return MaterialApp(
-      home: BlocProvider<WatchlistTvSeriesBloc>(
+      home: BlocProvider<WatchlistTVSeriesBloc>(
         create: (_) => mockBloc,
-        child: const WatchlistTvSeriesPage(),
+        child: const WatchlistTVSeriesPage(),
       ),
     );
   }
 
   testWidgets('should display AppBar with Watchlist title', (tester) async {
-    when(() => mockBloc.state).thenReturn(const WatchlistTvSeriesState());
+    when(() => mockBloc.state).thenReturn(const WatchlistTVSeriesState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -62,7 +62,7 @@ void main() {
   ) async {
     when(
       () => mockBloc.state,
-    ).thenReturn(const WatchlistTvSeriesState(state: RequestState.loading));
+    ).thenReturn(const WatchlistTVSeriesState(state: RequestState.loading));
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -73,9 +73,9 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      WatchlistTvSeriesState(
+      WatchlistTVSeriesState(
         state: RequestState.loaded,
-        watchlistTvSeries: testTvSeries,
+        watchlistTVSeries: testTvSeries,
       ),
     );
 
@@ -92,9 +92,9 @@ void main() {
     tester,
   ) async {
     when(() => mockBloc.state).thenReturn(
-      const WatchlistTvSeriesState(
+      const WatchlistTVSeriesState(
         state: RequestState.loaded,
-        watchlistTvSeries: [],
+        watchlistTVSeries: [],
       ),
     );
 
@@ -105,7 +105,7 @@ void main() {
 
   testWidgets('should show error message when state is error', (tester) async {
     when(() => mockBloc.state).thenReturn(
-      const WatchlistTvSeriesState(
+      const WatchlistTVSeriesState(
         state: RequestState.error,
         message: 'Failed to fetch watchlist',
       ),
@@ -119,9 +119,9 @@ void main() {
 
   testWidgets('should show pull-to-refresh on empty watchlist', (tester) async {
     when(() => mockBloc.state).thenReturn(
-      const WatchlistTvSeriesState(
+      const WatchlistTVSeriesState(
         state: RequestState.loaded,
-        watchlistTvSeries: [],
+        watchlistTVSeries: [],
       ),
     );
 

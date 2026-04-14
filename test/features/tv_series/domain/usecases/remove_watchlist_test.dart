@@ -15,7 +15,7 @@ void main() {
     usecase = RemoveWatchlist(mockRepository);
   });
 
-  const tTvSeriesDetail = TvSeriesDetail(
+  const tTvSeriesDetail = TVSeriesDetail(
     id: 1,
     name: 'Test',
     overview: 'Test Overview',

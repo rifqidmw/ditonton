@@ -45,8 +45,8 @@ class SeasonModel extends Season {
   );
 }
 
-class TvSeriesDetailModel extends TvSeriesDetail {
-  const TvSeriesDetailModel({
+class TVSeriesDetailModel extends TVSeriesDetail {
+  const TVSeriesDetailModel({
     required super.id,
     required super.name,
     super.posterPath,
@@ -61,8 +61,8 @@ class TvSeriesDetailModel extends TvSeriesDetail {
     required super.status,
   });
 
-  factory TvSeriesDetailModel.fromJson(Map<String, dynamic> json) =>
-      TvSeriesDetailModel(
+  factory TVSeriesDetailModel.fromJson(Map<String, dynamic> json) =>
+      TVSeriesDetailModel(
         id: json['id'],
         name: json['name'],
         posterPath: json['poster_path'],
@@ -108,7 +108,7 @@ class TvSeriesDetailModel extends TvSeriesDetail {
     'status': status,
   };
 
-  TvSeriesDetail toEntity() => TvSeriesDetail(
+  TVSeriesDetail toEntity() => TVSeriesDetail(
     id: id,
     name: name,
     posterPath: posterPath,

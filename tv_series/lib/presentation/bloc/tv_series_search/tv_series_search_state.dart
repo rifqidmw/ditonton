@@ -3,23 +3,23 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 
 enum RequestState { empty, loading, loaded, error }
 
-class TvSeriesSearchState extends Equatable {
+class TVSeriesSearchState extends Equatable {
   final RequestState state;
-  final List<TvSeries> searchResult;
+  final List<TVSeries> searchResult;
   final String message;
 
-  const TvSeriesSearchState({
+  const TVSeriesSearchState({
     this.state = RequestState.empty,
     this.searchResult = const [],
     this.message = '',
   });
 
-  TvSeriesSearchState copyWith({
+  TVSeriesSearchState copyWith({
     RequestState? state,
-    List<TvSeries>? searchResult,
+    List<TVSeries>? searchResult,
     String? message,
   }) {
-    return TvSeriesSearchState(
+    return TVSeriesSearchState(
       state: state ?? this.state,
       searchResult: searchResult ?? this.searchResult,
       message: message ?? this.message,

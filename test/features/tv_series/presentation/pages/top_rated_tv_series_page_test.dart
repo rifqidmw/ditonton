@@ -10,14 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockTvSeriesListBloc
-    extends MockBloc<TvSeriesListEvent, TvSeriesListState>
-    implements TvSeriesListBloc {}
+    extends MockBloc<TVSeriesListEvent, TVSeriesListState>
+    implements TVSeriesListBloc {}
 
 void main() {
   late MockTvSeriesListBloc mockBloc;
 
   final testTvSeries = [
-    TvSeries(
+    TVSeries(
       id: 1,
       name: 'Top Rated Series 1',
       overview: 'Overview 1',
@@ -25,7 +25,7 @@ void main() {
       voteAverage: 9.0,
       genreIds: const [18],
     ),
-    TvSeries(
+    TVSeries(
       id: 2,
       name: 'Top Rated Series 2',
       overview: 'Overview 2',
@@ -41,15 +41,15 @@ void main() {
 
   Widget makeTestableWidget() {
     return MaterialApp(
-      home: BlocProvider<TvSeriesListBloc>(
+      home: BlocProvider<TVSeriesListBloc>(
         create: (_) => mockBloc,
-        child: const TopRatedTvSeriesPage(),
+        child: const TopRatedTVSeriesPage(),
       ),
     );
   }
 
   testWidgets('should display AppBar with title', (tester) async {
-    when(() => mockBloc.state).thenReturn(const TvSeriesListState());
+    when(() => mockBloc.state).thenReturn(const TVSeriesListState());
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -62,7 +62,7 @@ void main() {
   ) async {
     when(
       () => mockBloc.state,
-    ).thenReturn(const TvSeriesListState(topRatedState: RequestState.loading));
+    ).thenReturn(const TVSeriesListState(topRatedState: RequestState.loading));
 
     await tester.pumpWidget(makeTestableWidget());
 
@@ -71,9 +71,9 @@ void main() {
 
   testWidgets('should show list when state is loaded', (tester) async {
     when(() => mockBloc.state).thenReturn(
-      TvSeriesListState(
+      TVSeriesListState(
         topRatedState: RequestState.loaded,
-        topRatedTvSeries: testTvSeries,
+        topRatedTVSeries: testTvSeries,
       ),
     );
 
@@ -87,7 +87,7 @@ void main() {
 
   testWidgets('should show error message when state is error', (tester) async {
     when(() => mockBloc.state).thenReturn(
-      const TvSeriesListState(
+      const TVSeriesListState(
         topRatedState: RequestState.error,
         topRatedMessage: 'Failed to load top rated',
       ),

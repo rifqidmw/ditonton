@@ -9,14 +9,14 @@ import 'package:tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_ser
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockGetWatchlistTvSeries extends Mock implements GetWatchlistTvSeries {}
+class MockGetWatchlistTvSeries extends Mock implements GetWatchlistTVSeries {}
 
 void main() {
-  late WatchlistTvSeriesBloc bloc;
+  late WatchlistTVSeriesBloc bloc;
   late MockGetWatchlistTvSeries mockGetWatchlistTvSeries;
 
   final tWatchlist = [
-    TvSeries(
+    TVSeries(
       id: 1,
       name: 'Watchlist Series',
       overview: 'Overview',
@@ -28,19 +28,19 @@ void main() {
 
   setUp(() {
     mockGetWatchlistTvSeries = MockGetWatchlistTvSeries();
-    bloc = WatchlistTvSeriesBloc(
-      getWatchlistTvSeries: mockGetWatchlistTvSeries,
+    bloc = WatchlistTVSeriesBloc(
+      getWatchlistTVSeries: mockGetWatchlistTvSeries,
     );
   });
 
   tearDown(() => bloc.close());
 
   test('initial state should be WatchlistTvSeriesState empty', () {
-    expect(bloc.state, const WatchlistTvSeriesState());
+    expect(bloc.state, const WatchlistTVSeriesState());
   });
 
   group('FetchWatchlistTvSeries', () {
-    blocTest<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+    blocTest<WatchlistTVSeriesBloc, WatchlistTVSeriesState>(
       'should emit [loading, loaded] when data is fetched successfully',
       build: () {
         when(
@@ -48,18 +48,17 @@ void main() {
         ).thenAnswer((_) async => Right(tWatchlist));
         return bloc;
       },
-      act: (b) => b.add(FetchWatchlistTvSeries()),
-      expect:
-          () => [
-            const WatchlistTvSeriesState(state: RequestState.loading),
-            WatchlistTvSeriesState(
-              state: RequestState.loaded,
-              watchlistTvSeries: tWatchlist,
-            ),
-          ],
+      act: (b) => b.add(FetchWatchlistTVSeries()),
+      expect: () => [
+        const WatchlistTVSeriesState(state: RequestState.loading),
+        WatchlistTVSeriesState(
+          state: RequestState.loaded,
+          watchlistTVSeries: tWatchlist,
+        ),
+      ],
     );
 
-    blocTest<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+    blocTest<WatchlistTVSeriesBloc, WatchlistTVSeriesState>(
       'should emit [loading, loaded] with empty list when watchlist is empty',
       build: () {
         when(
@@ -67,57 +66,50 @@ void main() {
         ).thenAnswer((_) async => const Right([]));
         return bloc;
       },
-      act: (b) => b.add(FetchWatchlistTvSeries()),
-      expect:
-          () => [
-            const WatchlistTvSeriesState(state: RequestState.loading),
-            const WatchlistTvSeriesState(
-              state: RequestState.loaded,
-              watchlistTvSeries: [],
-            ),
-          ],
+      act: (b) => b.add(FetchWatchlistTVSeries()),
+      expect: () => [
+        const WatchlistTVSeriesState(state: RequestState.loading),
+        const WatchlistTVSeriesState(
+          state: RequestState.loaded,
+          watchlistTVSeries: [],
+        ),
+      ],
     );
 
-    blocTest<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+    blocTest<WatchlistTVSeriesBloc, WatchlistTVSeriesState>(
       'should emit [loading, error] when fetch fails with server error',
       build: () {
         when(
           () => mockGetWatchlistTvSeries.execute(),
-        ).thenAnswer(
-          (_) async => const Left(ServerFailure('Server Error')),
-        );
+        ).thenAnswer((_) async => const Left(ServerFailure('Server Error')));
         return bloc;
       },
-      act: (b) => b.add(FetchWatchlistTvSeries()),
-      expect:
-          () => [
-            const WatchlistTvSeriesState(state: RequestState.loading),
-            const WatchlistTvSeriesState(
-              state: RequestState.error,
-              message: 'Server Error',
-            ),
-          ],
+      act: (b) => b.add(FetchWatchlistTVSeries()),
+      expect: () => [
+        const WatchlistTVSeriesState(state: RequestState.loading),
+        const WatchlistTVSeriesState(
+          state: RequestState.error,
+          message: 'Server Error',
+        ),
+      ],
     );
 
-    blocTest<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+    blocTest<WatchlistTVSeriesBloc, WatchlistTVSeriesState>(
       'should emit [loading, error] when fetch fails with database error',
       build: () {
         when(
           () => mockGetWatchlistTvSeries.execute(),
-        ).thenAnswer(
-          (_) async => const Left(DatabaseFailure('DB Error')),
-        );
+        ).thenAnswer((_) async => const Left(DatabaseFailure('DB Error')));
         return bloc;
       },
-      act: (b) => b.add(FetchWatchlistTvSeries()),
-      expect:
-          () => [
-            const WatchlistTvSeriesState(state: RequestState.loading),
-            const WatchlistTvSeriesState(
-              state: RequestState.error,
-              message: 'DB Error',
-            ),
-          ],
+      act: (b) => b.add(FetchWatchlistTVSeries()),
+      expect: () => [
+        const WatchlistTVSeriesState(state: RequestState.loading),
+        const WatchlistTVSeriesState(
+          state: RequestState.error,
+          message: 'DB Error',
+        ),
+      ],
     );
   });
 }

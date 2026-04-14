@@ -2,7 +2,7 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const tvSeries = TvSeries(
+  const tvSeries = TVSeries(
     id: 1,
     name: 'Test TV Series',
     overview: 'Test overview',
@@ -39,7 +39,7 @@ void main() {
     });
 
     test('should support value equality', () {
-      const tvSeries1 = TvSeries(
+      const tvSeries1 = TVSeries(
         id: 1,
         name: 'Test',
         overview: 'Overview',
@@ -48,7 +48,7 @@ void main() {
         genreIds: [18],
       );
 
-      const tvSeries2 = TvSeries(
+      const tvSeries2 = TVSeries(
         id: 1,
         name: 'Test',
         overview: 'Overview',
@@ -61,7 +61,7 @@ void main() {
     });
 
     test('should not be equal when properties differ', () {
-      const tvSeries1 = TvSeries(
+      const tvSeries1 = TVSeries(
         id: 1,
         name: 'Test',
         overview: 'Overview',
@@ -70,7 +70,7 @@ void main() {
         genreIds: [18],
       );
 
-      const tvSeries2 = TvSeries(
+      const tvSeries2 = TVSeries(
         id: 2,
         name: 'Test',
         overview: 'Overview',

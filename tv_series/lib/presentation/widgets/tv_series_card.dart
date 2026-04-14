@@ -4,11 +4,11 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class TvSeriesCard extends StatelessWidget {
-  final TvSeries tvSeries;
+class TVSeriesCard extends StatelessWidget {
+  final TVSeries tvSeries;
   final VoidCallback? onTap;
 
-  const TvSeriesCard({super.key, required this.tvSeries, this.onTap});
+  const TVSeriesCard({super.key, required this.tvSeries, this.onTap});
 
   @override
   Widget build(BuildContext context) {

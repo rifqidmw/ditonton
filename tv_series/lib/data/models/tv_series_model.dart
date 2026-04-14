@@ -1,7 +1,7 @@
 import 'package:tv_series/domain/entities/tv_series.dart';
 
-class TvSeriesModel extends TvSeries {
-  const TvSeriesModel({
+class TVSeriesModel extends TVSeries {
+  const TVSeriesModel({
     required super.id,
     required super.name,
     super.posterPath,
@@ -12,7 +12,7 @@ class TvSeriesModel extends TvSeries {
     required super.genreIds,
   });
 
-  factory TvSeriesModel.fromJson(Map<String, dynamic> json) => TvSeriesModel(
+  factory TVSeriesModel.fromJson(Map<String, dynamic> json) => TVSeriesModel(
     id: json['id'],
     name: json['name'],
     posterPath: json['poster_path'],
@@ -34,7 +34,7 @@ class TvSeriesModel extends TvSeries {
     'genre_ids': genreIds,
   };
 
-  TvSeries toEntity() => TvSeries(
+  TVSeries toEntity() => TVSeries(
     id: id,
     name: name,
     posterPath: posterPath,
@@ -46,15 +46,15 @@ class TvSeriesModel extends TvSeries {
   );
 }
 
-class TvSeriesResponse {
-  final List<TvSeriesModel> tvSeriesList;
+class TVSeriesResponse {
+  final List<TVSeriesModel> tvSeriesList;
 
-  TvSeriesResponse({required this.tvSeriesList});
+  TVSeriesResponse({required this.tvSeriesList});
 
-  factory TvSeriesResponse.fromJson(Map<String, dynamic> json) =>
-      TvSeriesResponse(
-        tvSeriesList: List<TvSeriesModel>.from(
-          (json['results'] as List).map((x) => TvSeriesModel.fromJson(x)),
+  factory TVSeriesResponse.fromJson(Map<String, dynamic> json) =>
+      TVSeriesResponse(
+        tvSeriesList: List<TVSeriesModel>.from(
+          (json['results'] as List).map((x) => TVSeriesModel.fromJson(x)),
         ),
       );
 }

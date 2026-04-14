@@ -6,6 +6,7 @@ import 'package:tv_series/domain/entities/tv_series_detail.dart';
 import 'package:tv_series/domain/usecases/get_tv_series_detail.dart';
 import 'package:tv_series/domain/usecases/get_tv_series_recommendations.dart';
 import 'package:tv_series/domain/usecases/get_watchlist_status.dart';
+import 'package:tv_series/domain/usecases/get_season_detail.dart';
 import 'package:tv_series/domain/usecases/remove_watchlist.dart';
 import 'package:tv_series/domain/usecases/save_watchlist.dart';
 import 'package:tv_series/presentation/bloc/tv_series_detail/tv_series_detail_bloc.dart';
@@ -14,10 +15,10 @@ import 'package:tv_series/presentation/bloc/tv_series_detail/tv_series_detail_st
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockGetTvSeriesDetail extends Mock implements GetTvSeriesDetail {}
+class MockGetTvSeriesDetail extends Mock implements GetTVSeriesDetail {}
 
 class MockGetTvSeriesRecommendations extends Mock
-    implements GetTvSeriesRecommendations {}
+    implements GetTVSeriesRecommendations {}
 
 class MockGetWatchlistStatus extends Mock implements GetWatchlistStatus {}
 
@@ -25,17 +26,21 @@ class MockSaveWatchlist extends Mock implements SaveWatchlist {}
 
 class MockRemoveWatchlist extends Mock implements RemoveWatchlist {}
 
+class MockGetSeasonDetail extends Mock implements GetSeasonDetail {}
+
 void main() {
-  late TvSeriesDetailBloc bloc;
+  late TVSeriesDetailBloc bloc;
   late MockGetTvSeriesDetail mockGetDetail;
   late MockGetTvSeriesRecommendations mockGetRecommendations;
   late MockGetWatchlistStatus mockGetWatchlistStatus;
   late MockSaveWatchlist mockSaveWatchlist;
   late MockRemoveWatchlist mockRemoveWatchlist;
 
+  late MockGetSeasonDetail mockGetSeasonDetail;
+
   const tId = 1;
 
-  const tTvSeriesDetail = TvSeriesDetail(
+  const tTvSeriesDetail = TVSeriesDetail(
     id: tId,
     name: 'Test Series',
     overview: 'Overview',
@@ -50,7 +55,7 @@ void main() {
   );
 
   final tRecommendations = [
-    TvSeries(
+    TVSeries(
       id: 2,
       name: 'Recommended',
       overview: 'Rec overview',
@@ -66,23 +71,25 @@ void main() {
     mockGetWatchlistStatus = MockGetWatchlistStatus();
     mockSaveWatchlist = MockSaveWatchlist();
     mockRemoveWatchlist = MockRemoveWatchlist();
-    bloc = TvSeriesDetailBloc(
-      getTvSeriesDetail: mockGetDetail,
-      getTvSeriesRecommendations: mockGetRecommendations,
+    mockGetSeasonDetail = MockGetSeasonDetail();
+    bloc = TVSeriesDetailBloc(
+      getTVSeriesDetail: mockGetDetail,
+      getTVSeriesRecommendations: mockGetRecommendations,
       getWatchlistStatus: mockGetWatchlistStatus,
       saveWatchlist: mockSaveWatchlist,
       removeWatchlist: mockRemoveWatchlist,
+      getSeasonDetail: mockGetSeasonDetail,
     );
   });
 
   tearDown(() => bloc.close());
 
   test('initial state should be TvSeriesDetailState empty', () {
-    expect(bloc.state, const TvSeriesDetailState());
+    expect(bloc.state, const TVSeriesDetailState());
   });
 
   group('FetchTvSeriesDetail', () {
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit [loading, loaded] with recommendations when both succeed',
       build: () {
         when(
@@ -93,18 +100,18 @@ void main() {
         ).thenAnswer((_) async => Right(tRecommendations));
         return bloc;
       },
-      act: (b) => b.add(const FetchTvSeriesDetail(tId)),
+      act: (b) => b.add(const FetchTVSeriesDetail(tId)),
       expect: () => [
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loading,
           watchlistMessage: '',
         ),
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loaded,
           tvSeriesDetail: tTvSeriesDetail,
           recommendationState: RequestState.loading,
         ),
-        TvSeriesDetailState(
+        TVSeriesDetailState(
           detailState: RequestState.loaded,
           tvSeriesDetail: tTvSeriesDetail,
           recommendationState: RequestState.loaded,
@@ -113,7 +120,7 @@ void main() {
       ],
     );
 
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit [loading, loaded] with recommendation error when rec fails',
       build: () {
         when(
@@ -124,18 +131,18 @@ void main() {
         ).thenAnswer((_) async => const Left(ServerFailure('Rec Error')));
         return bloc;
       },
-      act: (b) => b.add(const FetchTvSeriesDetail(tId)),
+      act: (b) => b.add(const FetchTVSeriesDetail(tId)),
       expect: () => [
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loading,
           watchlistMessage: '',
         ),
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loaded,
           tvSeriesDetail: tTvSeriesDetail,
           recommendationState: RequestState.loading,
         ),
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loaded,
           tvSeriesDetail: tTvSeriesDetail,
           recommendationState: RequestState.error,
@@ -144,7 +151,7 @@ void main() {
       ],
     );
 
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit [loading, error] when detail fetch fails',
       build: () {
         when(
@@ -155,20 +162,20 @@ void main() {
         ).thenAnswer((_) async => Right(tRecommendations));
         return bloc;
       },
-      act: (b) => b.add(const FetchTvSeriesDetail(tId)),
+      act: (b) => b.add(const FetchTVSeriesDetail(tId)),
       expect: () => [
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loading,
           watchlistMessage: '',
         ),
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.error,
           detailMessage: 'Server Error',
         ),
       ],
     );
 
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit [loading, error] on connection failure',
       build: () {
         when(
@@ -179,13 +186,13 @@ void main() {
         ).thenAnswer((_) async => Right(tRecommendations));
         return bloc;
       },
-      act: (b) => b.add(const FetchTvSeriesDetail(tId)),
+      act: (b) => b.add(const FetchTVSeriesDetail(tId)),
       expect: () => [
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.loading,
           watchlistMessage: '',
         ),
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           detailState: RequestState.error,
           detailMessage: 'No internet',
         ),
@@ -194,7 +201,7 @@ void main() {
   });
 
   group('AddToWatchlist', () {
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit state with isAddedToWatchlist=true on success',
       build: () {
         when(
@@ -204,14 +211,14 @@ void main() {
       },
       act: (b) => b.add(const AddToWatchlist(tTvSeriesDetail)),
       expect: () => [
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           isAddedToWatchlist: true,
           watchlistMessage: 'Added to Watchlist',
         ),
       ],
     );
 
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit state with failure message on error',
       build: () {
         when(
@@ -221,13 +228,13 @@ void main() {
       },
       act: (b) => b.add(const AddToWatchlist(tTvSeriesDetail)),
       expect: () => [
-        const TvSeriesDetailState(watchlistMessage: 'Failed to add'),
+        const TVSeriesDetailState(watchlistMessage: 'Failed to add'),
       ],
     );
   });
 
   group('RemoveFromWatchlist', () {
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit state with isAddedToWatchlist=false on success',
       build: () {
         when(
@@ -237,14 +244,14 @@ void main() {
       },
       act: (b) => b.add(const RemoveFromWatchlist(tTvSeriesDetail)),
       expect: () => [
-        const TvSeriesDetailState(
+        const TVSeriesDetailState(
           isAddedToWatchlist: false,
           watchlistMessage: 'Removed from Watchlist',
         ),
       ],
     );
 
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit state with failure message on error',
       build: () {
         when(() => mockRemoveWatchlist.execute(tTvSeriesDetail)).thenAnswer(
@@ -254,13 +261,13 @@ void main() {
       },
       act: (b) => b.add(const RemoveFromWatchlist(tTvSeriesDetail)),
       expect: () => [
-        const TvSeriesDetailState(watchlistMessage: 'Failed to remove'),
+        const TVSeriesDetailState(watchlistMessage: 'Failed to remove'),
       ],
     );
   });
 
   group('LoadWatchlistStatus', () {
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit state with isAddedToWatchlist=true when in watchlist',
       build: () {
         when(
@@ -269,10 +276,10 @@ void main() {
         return bloc;
       },
       act: (b) => b.add(const LoadWatchlistStatus(tId)),
-      expect: () => [const TvSeriesDetailState(isAddedToWatchlist: true)],
+      expect: () => [const TVSeriesDetailState(isAddedToWatchlist: true)],
     );
 
-    blocTest<TvSeriesDetailBloc, TvSeriesDetailState>(
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
       'should emit state with isAddedToWatchlist=false when not in watchlist',
       build: () {
         when(
@@ -281,7 +288,7 @@ void main() {
         return bloc;
       },
       act: (b) => b.add(const LoadWatchlistStatus(tId)),
-      expect: () => [const TvSeriesDetailState(isAddedToWatchlist: false)],
+      expect: () => [const TVSeriesDetailState(isAddedToWatchlist: false)],
     );
   });
 }

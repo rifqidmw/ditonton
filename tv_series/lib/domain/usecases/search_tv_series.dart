@@ -3,12 +3,12 @@ import 'package:core/error/failures.dart';
 import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:tv_series/domain/repositories/tv_series_repository.dart';
 
-class SearchTvSeries {
-  final TvSeriesRepository repository;
+class SearchTVSeries {
+  final TVSeriesRepository repository;
 
-  SearchTvSeries(this.repository);
+  SearchTVSeries(this.repository);
 
-  Future<Either<Failure, List<TvSeries>>> execute(String query) {
-    return repository.searchTvSeries(query);
+  Future<Either<Failure, List<TVSeries>>> execute(String query) {
+    return repository.searchTVSeries(query);
   }
 }

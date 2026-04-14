@@ -5,20 +5,20 @@ import 'package:tv_series/presentation/widgets/tv_series_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TopRatedTvSeriesPage extends StatefulWidget {
-  const TopRatedTvSeriesPage({super.key});
+class TopRatedTVSeriesPage extends StatefulWidget {
+  const TopRatedTVSeriesPage({super.key});
 
   @override
-  State<TopRatedTvSeriesPage> createState() => _TopRatedTvSeriesPageState();
+  State<TopRatedTVSeriesPage> createState() => _TopRatedTVSeriesPageState();
 }
 
-class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
+class _TopRatedTVSeriesPageState extends State<TopRatedTVSeriesPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
       if (!mounted) return;
-      context.read<TvSeriesListBloc>().add(FetchTopRatedTvSeries());
+      context.read<TVSeriesListBloc>().add(FetchTopRatedTVSeries());
     });
   }
 
@@ -28,17 +28,17 @@ class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
       appBar: AppBar(title: const Text('Top Rated TV Series')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<TvSeriesListBloc, TvSeriesListState>(
+        child: BlocBuilder<TVSeriesListBloc, TVSeriesListState>(
           builder: (context, state) {
             if (state.topRatedState == RequestState.loading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state.topRatedState == RequestState.loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvSeries = state.topRatedTvSeries[index];
-                  return TvSeriesCard(tvSeries: tvSeries);
+                  final tvSeries = state.topRatedTVSeries[index];
+                  return TVSeriesCard(tvSeries: tvSeries);
                 },
-                itemCount: state.topRatedTvSeries.length,
+                itemCount: state.topRatedTVSeries.length,
               );
             } else {
               return Center(

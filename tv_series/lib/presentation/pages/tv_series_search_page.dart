@@ -5,8 +5,8 @@ import 'package:tv_series/presentation/widgets/tv_series_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TvSeriesSearchPage extends StatelessWidget {
-  const TvSeriesSearchPage({super.key});
+class TVSeriesSearchPage extends StatelessWidget {
+  const TVSeriesSearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TvSeriesSearchPage extends StatelessWidget {
           children: [
             TextField(
               onChanged: (query) {
-                context.read<TvSeriesSearchBloc>().add(OnQueryChanged(query));
+                context.read<TVSeriesSearchBloc>().add(OnQueryChanged(query));
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
@@ -33,7 +33,7 @@ class TvSeriesSearchPage extends StatelessWidget {
               'Search Result',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            BlocBuilder<TvSeriesSearchBloc, TvSeriesSearchState>(
+            BlocBuilder<TVSeriesSearchBloc, TVSeriesSearchState>(
               builder: (context, state) {
                 if (state.state == RequestState.loading) {
                   return const Center(child: CircularProgressIndicator());
@@ -49,7 +49,7 @@ class TvSeriesSearchPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
                         final tvSeries = result[index];
-                        return TvSeriesCard(tvSeries: tvSeries);
+                        return TVSeriesCard(tvSeries: tvSeries);
                       },
                       itemCount: result.length,
                     ),

@@ -8,25 +8,25 @@ import 'package:tv_series/domain/repositories/tv_series_repository.dart';
 
 import 'get_popular_tv_series_test.mocks.dart';
 
-@GenerateMocks([TvSeriesRepository])
+@GenerateMocks([TVSeriesRepository])
 void main() {
-  late GetPopularTvSeries usecase;
+  late GetPopularTVSeries usecase;
   late MockTvSeriesRepository mockTvSeriesRepository;
 
   setUp(() {
     mockTvSeriesRepository = MockTvSeriesRepository();
-    usecase = GetPopularTvSeries(mockTvSeriesRepository);
+    usecase = GetPopularTVSeries(mockTvSeriesRepository);
   });
 
-  final tTvSeries = <TvSeries>[];
+  final tTvSeries = <TVSeries>[];
 
   test('should get list of tv series from the repository', () async {
     when(
-      mockTvSeriesRepository.getPopularTvSeries(),
+      mockTvSeriesRepository.getPopularTVSeries(),
     ).thenAnswer((_) async => Right(tTvSeries));
     final result = await usecase.execute();
     expect(result, Right(tTvSeries));
-    verify(mockTvSeriesRepository.getPopularTvSeries());
+    verify(mockTvSeriesRepository.getPopularTVSeries());
     verifyNoMoreInteractions(mockTvSeriesRepository);
   });
 }

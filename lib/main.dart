@@ -1,3 +1,4 @@
+import 'package:core/network/ssl_pinning.dart';
 import 'package:ditonton/core/di/injection.dart' as di;
 import 'package:ditonton/core/router/app_router.dart';
 import 'package:movies/presentation/bloc/movie_detail/movie_detail_bloc.dart';
@@ -14,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SslPinning.check();
   di.init();
   await di.initDatabase();
   runApp(const MainApp());
@@ -26,10 +28,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => di.locator<TvSeriesListBloc>()),
-        BlocProvider(create: (_) => di.locator<TvSeriesDetailBloc>()),
-        BlocProvider(create: (_) => di.locator<TvSeriesSearchBloc>()),
-        BlocProvider(create: (_) => di.locator<WatchlistTvSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<TVSeriesListBloc>()),
+        BlocProvider(create: (_) => di.locator<TVSeriesDetailBloc>()),
+        BlocProvider(create: (_) => di.locator<TVSeriesSearchBloc>()),
+        BlocProvider(create: (_) => di.locator<WatchlistTVSeriesBloc>()),
         BlocProvider(create: (_) => di.locator<MovieListBloc>()),
         BlocProvider(create: (_) => di.locator<MovieDetailBloc>()),
         BlocProvider(create: (_) => di.locator<MovieSearchBloc>()),

@@ -3,84 +3,99 @@ import 'package:core/constants/api_constants.dart';
 import 'package:core/error/exceptions.dart';
 import 'package:tv_series/data/models/tv_series_detail_model.dart';
 import 'package:tv_series/data/models/tv_series_model.dart';
+import 'package:tv_series/data/models/season_detail_model.dart';
 
-abstract class TvSeriesRemoteDataSource {
-  Future<List<TvSeriesModel>> getPopularTvSeries();
-  Future<List<TvSeriesModel>> getTopRatedTvSeries();
-  Future<List<TvSeriesModel>> getOnTheAirTvSeries();
-  Future<TvSeriesDetailModel> getTvSeriesDetail(int id);
-  Future<List<TvSeriesModel>> getTvSeriesRecommendations(int id);
-  Future<List<TvSeriesModel>> searchTvSeries(String query);
+abstract class TVSeriesRemoteDataSource {
+  Future<List<TVSeriesModel>> getPopularTVSeries();
+  Future<List<TVSeriesModel>> getTopRatedTVSeries();
+  Future<List<TVSeriesModel>> getOnTheAirTVSeries();
+  Future<TVSeriesDetailModel> getTVSeriesDetail(int id);
+  Future<List<TVSeriesModel>> getTVSeriesRecommendations(int id);
+  Future<List<TVSeriesModel>> searchTVSeries(String query);
+  Future<SeasonDetailModel> getSeasonDetail(int tvId, int seasonNumber);
 }
 
-class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
+class TVSeriesRemoteDataSourceImpl implements TVSeriesRemoteDataSource {
   final Dio client;
 
-  TvSeriesRemoteDataSourceImpl({required this.client});
+  TVSeriesRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<List<TvSeriesModel>> getPopularTvSeries() async {
-    final response = await client.get(ApiConstants.popularTvSeries);
+  Future<List<TVSeriesModel>> getPopularTVSeries() async {
+    final response = await client.get(ApiConstants.popularTVSeries);
 
     if (response.statusCode == 200) {
-      return TvSeriesResponse.fromJson(response.data).tvSeriesList;
+      return TVSeriesResponse.fromJson(response.data).tvSeriesList;
     } else {
       throw ServerException('Failed to load popular TV series');
     }
   }
 
   @override
-  Future<List<TvSeriesModel>> getTopRatedTvSeries() async {
-    final response = await client.get(ApiConstants.topRatedTvSeries);
+  Future<List<TVSeriesModel>> getTopRatedTVSeries() async {
+    final response = await client.get(ApiConstants.topRatedTVSeries);
 
     if (response.statusCode == 200) {
-      return TvSeriesResponse.fromJson(response.data).tvSeriesList;
+      return TVSeriesResponse.fromJson(response.data).tvSeriesList;
     } else {
       throw ServerException('Failed to load top rated TV series');
     }
   }
 
   @override
-  Future<List<TvSeriesModel>> getOnTheAirTvSeries() async {
-    final response = await client.get(ApiConstants.onTheAirTvSeries);
+  Future<List<TVSeriesModel>> getOnTheAirTVSeries() async {
+    final response = await client.get(ApiConstants.onTheAirTVSeries);
 
     if (response.statusCode == 200) {
-      return TvSeriesResponse.fromJson(response.data).tvSeriesList;
+      return TVSeriesResponse.fromJson(response.data).tvSeriesList;
     } else {
       throw ServerException('Failed to load on the air TV series');
     }
   }
 
   @override
-  Future<TvSeriesDetailModel> getTvSeriesDetail(int id) async {
+  Future<TVSeriesDetailModel> getTVSeriesDetail(int id) async {
     final response = await client.get(ApiConstants.tvSeriesDetail(id));
 
     if (response.statusCode == 200) {
-      return TvSeriesDetailModel.fromJson(response.data);
+      return TVSeriesDetailModel.fromJson(response.data);
     } else {
       throw ServerException('Failed to load TV series detail');
     }
   }
 
   @override
-  Future<List<TvSeriesModel>> getTvSeriesRecommendations(int id) async {
+  Future<List<TVSeriesModel>> getTVSeriesRecommendations(int id) async {
     final response = await client.get(ApiConstants.tvSeriesRecommendations(id));
 
     if (response.statusCode == 200) {
-      return TvSeriesResponse.fromJson(response.data).tvSeriesList;
+      return TVSeriesResponse.fromJson(response.data).tvSeriesList;
     } else {
       throw ServerException('Failed to load TV series recommendations');
     }
   }
 
   @override
-  Future<List<TvSeriesModel>> searchTvSeries(String query) async {
-    final response = await client.get(ApiConstants.searchTvSeries(query));
+  Future<List<TVSeriesModel>> searchTVSeries(String query) async {
+    final response = await client.get(ApiConstants.searchTVSeries(query));
 
     if (response.statusCode == 200) {
-      return TvSeriesResponse.fromJson(response.data).tvSeriesList;
+      return TVSeriesResponse.fromJson(response.data).tvSeriesList;
     } else {
       throw ServerException('Failed to search TV series');
+    }
+  }
+
+  @override
+  Future<SeasonDetailModel> getSeasonDetail(int tvId, int seasonNumber) async {
+    final response = await client.get(
+      ApiConstants.tvSeasonDetail(tvId, seasonNumber),
+    );
+
+    if (response.statusCode == 200) {
+      return SeasonDetailModel.fromJson(response.data);
+    } else {
+      throw ServerException('Failed to load season detail');
     }
   }
 }
