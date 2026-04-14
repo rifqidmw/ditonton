@@ -291,4 +291,51 @@ void main() {
       expect: () => [const TVSeriesDetailState(isAddedToWatchlist: false)],
     );
   });
+
+  group('FetchSeasonDetail', () {
+    const tSeasonNumber = 1;
+    const tSeasonDetail = SeasonDetail(
+      id: 1,
+      name: 'Season 1',
+      seasonNumber: 1,
+      overview: 'Season overview',
+      episodes: [],
+    );
+
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
+      'should emit [loading, loaded] when getSeasonDetail succeeds',
+      build: () {
+        when(
+          () => mockGetSeasonDetail.execute(tId, tSeasonNumber),
+        ).thenAnswer((_) async => const Right(tSeasonDetail));
+        return bloc;
+      },
+      act: (b) => b.add(const FetchSeasonDetail(tId, tSeasonNumber)),
+      expect: () => [
+        const TVSeriesDetailState(seasonDetailState: RequestState.loading),
+        const TVSeriesDetailState(
+          seasonDetailState: RequestState.loaded,
+          selectedSeasonDetail: tSeasonDetail,
+        ),
+      ],
+    );
+
+    blocTest<TVSeriesDetailBloc, TVSeriesDetailState>(
+      'should emit [loading, error] when getSeasonDetail fails',
+      build: () {
+        when(
+          () => mockGetSeasonDetail.execute(tId, tSeasonNumber),
+        ).thenAnswer((_) async => const Left(ServerFailure('Season Error')));
+        return bloc;
+      },
+      act: (b) => b.add(const FetchSeasonDetail(tId, tSeasonNumber)),
+      expect: () => [
+        const TVSeriesDetailState(seasonDetailState: RequestState.loading),
+        const TVSeriesDetailState(
+          seasonDetailState: RequestState.error,
+          seasonDetailMessage: 'Season Error',
+        ),
+      ],
+    );
+  });
 }

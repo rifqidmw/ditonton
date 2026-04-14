@@ -56,5 +56,53 @@ void main() {
     test('baseImageUrl should be correct', () {
       expect(ApiConstants.baseImageUrl, 'https://image.tmdb.org/t/p/w500');
     });
+
+    test(
+      'tvSeasonDetail should generate correct URL for given tvId and seasonNumber',
+      () {
+        const tvId = 1;
+        const seasonNumber = 2;
+        final url = ApiConstants.tvSeasonDetail(tvId, seasonNumber);
+        expect(url, contains('/tv/1/season/2'));
+        expect(url, contains('api_key='));
+      },
+    );
+
+    test('nowPlayingMovies URL should contain api_key', () {
+      expect(ApiConstants.nowPlayingMovies, contains('api_key='));
+      expect(ApiConstants.nowPlayingMovies, contains('/movie/now_playing'));
+    });
+
+    test('popularMovies URL should contain api_key', () {
+      expect(ApiConstants.popularMovies, contains('api_key='));
+      expect(ApiConstants.popularMovies, contains('/movie/popular'));
+    });
+
+    test('topRatedMovies URL should contain api_key', () {
+      expect(ApiConstants.topRatedMovies, contains('api_key='));
+      expect(ApiConstants.topRatedMovies, contains('/movie/top_rated'));
+    });
+
+    test('movieDetail should generate correct URL for given id', () {
+      const id = 10;
+      final url = ApiConstants.movieDetail(id);
+      expect(url, contains('/movie/10'));
+      expect(url, contains('api_key='));
+    });
+
+    test('movieRecommendations should generate correct URL for given id', () {
+      const id = 10;
+      final url = ApiConstants.movieRecommendations(id);
+      expect(url, contains('/movie/10/recommendations'));
+      expect(url, contains('api_key='));
+    });
+
+    test('searchMovies should generate correct URL with query', () {
+      const query = 'inception';
+      final url = ApiConstants.searchMovies(query);
+      expect(url, contains('/search/movie'));
+      expect(url, contains('query=inception'));
+      expect(url, contains('api_key='));
+    });
   });
 }

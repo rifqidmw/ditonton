@@ -2,6 +2,7 @@ import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:tv_series/presentation/widgets/tv_series_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
   final testTvSeries = TVSeries(
@@ -15,6 +16,23 @@ void main() {
 
   Widget makeTestableWidget(Widget child) {
     return MaterialApp(home: Scaffold(body: child));
+  }
+
+  Widget makeRoutableWidget(Widget child) {
+    final router = GoRouter(
+      initialLocation: '/',
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => Scaffold(body: child),
+        ),
+        GoRoute(
+          path: '/tv-series/:id',
+          builder: (context, state) => const Scaffold(body: Text('Detail')),
+        ),
+      ],
+    );
+    return MaterialApp.router(routerConfig: router);
   }
 
   testWidgets('should display tv series name', (tester) async {
@@ -58,6 +76,19 @@ void main() {
     expect(find.byType(GestureDetector), findsOneWidget);
     expect(find.byType(Card), findsOneWidget);
   });
+
+  testWidgets(
+    'navigates to tv series detail when tapped without custom onTap',
+    (tester) async {
+      await tester.pumpWidget(
+        makeRoutableWidget(TVSeriesCard(tvSeries: testTvSeries)),
+      );
+      await tester.pump();
+      await tester.tap(find.byType(GestureDetector).first);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+    },
+  );
 
   testWidgets('should show placeholder when posterPath is null', (
     tester,

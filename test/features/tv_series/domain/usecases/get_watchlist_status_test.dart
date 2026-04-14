@@ -6,10 +6,10 @@ import 'get_popular_tv_series_test.mocks.dart';
 
 void main() {
   late GetWatchlistStatus usecase;
-  late MockTvSeriesRepository mockRepository;
+  late MockTVSeriesRepository mockRepository;
 
   setUp(() {
-    mockRepository = MockTvSeriesRepository();
+    mockRepository = MockTVSeriesRepository();
     usecase = GetWatchlistStatus(mockRepository);
   });
 

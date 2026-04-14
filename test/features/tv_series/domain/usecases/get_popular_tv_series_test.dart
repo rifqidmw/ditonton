@@ -11,10 +11,10 @@ import 'get_popular_tv_series_test.mocks.dart';
 @GenerateMocks([TVSeriesRepository])
 void main() {
   late GetPopularTVSeries usecase;
-  late MockTvSeriesRepository mockTvSeriesRepository;
+  late MockTVSeriesRepository mockTvSeriesRepository;
 
   setUp(() {
-    mockTvSeriesRepository = MockTvSeriesRepository();
+    mockTvSeriesRepository = MockTVSeriesRepository();
     usecase = GetPopularTVSeries(mockTvSeriesRepository);
   });
 

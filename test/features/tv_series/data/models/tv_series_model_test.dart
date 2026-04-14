@@ -45,4 +45,44 @@ void main() {
     };
     expect(result, expectedJsonMap);
   });
+
+  test('toEntity should return a TVSeries entity with same data', () {
+    final entity = tTvSeriesModel.toEntity();
+    expect(entity.id, tTvSeriesModel.id);
+    expect(entity.name, tTvSeriesModel.name);
+    expect(entity.overview, tTvSeriesModel.overview);
+    expect(entity.posterPath, tTvSeriesModel.posterPath);
+    expect(entity.voteAverage, tTvSeriesModel.voteAverage);
+    expect(entity.genreIds, tTvSeriesModel.genreIds);
+  });
+
+  group('TVSeriesResponse', () {
+    test('should return a valid TVSeriesResponse from JSON', () {
+      final Map<String, dynamic> jsonMap = {
+        'results': [
+          {
+            'id': 1,
+            'name': 'Test Name',
+            'overview': 'Test Overview',
+            'poster_path': '/test.jpg',
+            'backdrop_path': null,
+            'vote_average': 8.0,
+            'first_air_date': null,
+            'genre_ids': [1, 2, 3],
+          },
+        ],
+      };
+
+      final result = TVSeriesResponse.fromJson(jsonMap);
+
+      expect(result.tvSeriesList.length, 1);
+      expect(result.tvSeriesList.first, tTvSeriesModel);
+    });
+
+    test('should return empty list when results is empty', () {
+      final Map<String, dynamic> jsonMap = {'results': []};
+      final result = TVSeriesResponse.fromJson(jsonMap);
+      expect(result.tvSeriesList, isEmpty);
+    });
+  });
 }

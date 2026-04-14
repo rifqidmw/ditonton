@@ -215,6 +215,20 @@ void main() {
         ),
       ],
     );
+
+    blocTest<MovieDetailBloc, MovieDetailState>(
+      'should emit state with failure message on remove error',
+      build: () {
+        when(() => mockRemoveWatchlist.execute(tMovieDetail)).thenAnswer(
+          (_) async => const Left(DatabaseFailure('Failed to remove')),
+        );
+        return bloc;
+      },
+      act: (b) => b.add(const RemoveMovieFromWatchlist(tMovieDetail)),
+      expect: () => [
+        const MovieDetailState(watchlistMessage: 'Failed to remove'),
+      ],
+    );
   });
 
   group('LoadMovieWatchlistStatus', () {

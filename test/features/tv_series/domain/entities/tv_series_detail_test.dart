@@ -179,4 +179,143 @@ void main() {
       expect(tvSeriesDetail1 == tvSeriesDetail2, false);
     });
   });
+
+  group('Episode Entity', () {
+    const tEpisode = Episode(
+      id: 1,
+      name: 'Pilot',
+      episodeNumber: 1,
+      seasonNumber: 1,
+      overview: 'The beginning.',
+      stillPath: '/still.jpg',
+      voteAverage: 8.5,
+      airDate: '2023-01-01',
+    );
+
+    test('should have correct properties', () {
+      expect(tEpisode.id, 1);
+      expect(tEpisode.name, 'Pilot');
+      expect(tEpisode.episodeNumber, 1);
+      expect(tEpisode.seasonNumber, 1);
+      expect(tEpisode.overview, 'The beginning.');
+      expect(tEpisode.stillPath, '/still.jpg');
+      expect(tEpisode.voteAverage, 8.5);
+      expect(tEpisode.airDate, '2023-01-01');
+    });
+
+    test('props should contain all properties', () {
+      expect(tEpisode.props, [
+        1,
+        'Pilot',
+        1,
+        1,
+        'The beginning.',
+        '/still.jpg',
+        8.5,
+        '2023-01-01',
+      ]);
+    });
+
+    test('should support value equality', () {
+      const episode1 = Episode(
+        id: 1,
+        name: 'Pilot',
+        episodeNumber: 1,
+        seasonNumber: 1,
+        overview: 'The beginning.',
+        voteAverage: 8.5,
+      );
+      const episode2 = Episode(
+        id: 1,
+        name: 'Pilot',
+        episodeNumber: 1,
+        seasonNumber: 1,
+        overview: 'The beginning.',
+        voteAverage: 8.5,
+      );
+      expect(episode1, episode2);
+    });
+
+    test('should handle null stillPath and airDate', () {
+      const episode = Episode(
+        id: 2,
+        name: 'Second',
+        episodeNumber: 2,
+        seasonNumber: 1,
+        overview: '',
+        voteAverage: 0,
+      );
+      expect(episode.stillPath, null);
+      expect(episode.airDate, null);
+    });
+  });
+
+  group('SeasonDetail Entity', () {
+    const tEpisode = Episode(
+      id: 1,
+      name: 'Pilot',
+      episodeNumber: 1,
+      seasonNumber: 1,
+      overview: 'The beginning.',
+      voteAverage: 8.5,
+    );
+
+    const tSeasonDetail = SeasonDetail(
+      id: 1,
+      name: 'Season 1',
+      seasonNumber: 1,
+      posterPath: '/poster.jpg',
+      overview: 'First season.',
+      episodes: [tEpisode],
+    );
+
+    test('should have correct properties', () {
+      expect(tSeasonDetail.id, 1);
+      expect(tSeasonDetail.name, 'Season 1');
+      expect(tSeasonDetail.seasonNumber, 1);
+      expect(tSeasonDetail.posterPath, '/poster.jpg');
+      expect(tSeasonDetail.overview, 'First season.');
+      expect(tSeasonDetail.episodes.length, 1);
+    });
+
+    test('props should contain all properties', () {
+      expect(tSeasonDetail.props, [
+        1,
+        'Season 1',
+        1,
+        '/poster.jpg',
+        'First season.',
+        [tEpisode],
+      ]);
+    });
+
+    test('should support value equality', () {
+      const sd1 = SeasonDetail(
+        id: 1,
+        name: 'Season 1',
+        seasonNumber: 1,
+        overview: '',
+        episodes: [],
+      );
+      const sd2 = SeasonDetail(
+        id: 1,
+        name: 'Season 1',
+        seasonNumber: 1,
+        overview: '',
+        episodes: [],
+      );
+      expect(sd1, sd2);
+    });
+
+    test('should handle null posterPath', () {
+      const sd = SeasonDetail(
+        id: 1,
+        name: 'Season 1',
+        seasonNumber: 1,
+        overview: '',
+        episodes: [],
+      );
+      expect(sd.posterPath, null);
+    });
+  });
 }

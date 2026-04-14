@@ -1,3 +1,6 @@
+import 'package:ditonton/presentation/pages/main_page.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movies/presentation/pages/movie_detail_page.dart';
 import 'package:movies/presentation/pages/movie_search_page.dart';
 import 'package:movies/presentation/pages/popular_movies_page.dart';
@@ -7,11 +10,10 @@ import 'package:tv_series/presentation/pages/top_rated_tv_series_page.dart';
 import 'package:tv_series/presentation/pages/tv_series_detail_page.dart';
 import 'package:tv_series/presentation/pages/tv_series_search_page.dart';
 import 'package:tv_series/presentation/pages/watchlist_tv_series_page.dart';
-import 'package:ditonton/presentation/pages/main_page.dart';
-import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
   initialLocation: '/',
+  observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
   routes: [
     GoRoute(path: '/', builder: (context, state) => const MainPage()),
     GoRoute(

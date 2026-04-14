@@ -8,10 +8,10 @@ import 'get_popular_tv_series_test.mocks.dart';
 
 void main() {
   late GetTVSeriesDetail usecase;
-  late MockTvSeriesRepository mockTvSeriesRepository;
+  late MockTVSeriesRepository mockTvSeriesRepository;
 
   setUp(() {
-    mockTvSeriesRepository = MockTvSeriesRepository();
+    mockTvSeriesRepository = MockTVSeriesRepository();
     usecase = GetTVSeriesDetail(mockTvSeriesRepository);
   });
 
