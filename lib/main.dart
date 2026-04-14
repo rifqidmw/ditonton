@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:core/network/ssl_pinning.dart';
 import 'package:ditonton/core/di/injection.dart' as di;
 import 'package:ditonton/core/router/app_router.dart';
