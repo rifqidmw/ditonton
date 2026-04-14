@@ -22,17 +22,13 @@ import 'package:tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_ser
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!Platform.isIOS) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
-  }
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   await SslPinning.check();
   di.init();
