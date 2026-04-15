@@ -55,7 +55,7 @@ void main() {
       routes: [
         GoRoute(
           path: '/',
-          pageBuilder: (_, __) => NoTransitionPage(
+          pageBuilder: (_, _) => NoTransitionPage(
             child: BlocProvider<TVSeriesListBloc>(
               create: (_) => mockBloc,
               child: const TVSeriesHomePage(),
@@ -64,19 +64,19 @@ void main() {
         ),
         GoRoute(
           path: '/tv-series/search',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
         GoRoute(
           path: '/tv-series/popular',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
         GoRoute(
           path: '/tv-series/top-rated',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
         GoRoute(
           path: '/tv-series/:id',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
       ],
     );

@@ -59,7 +59,7 @@ void main() {
       routes: [
         GoRoute(
           path: '/',
-          pageBuilder: (_, __) => NoTransitionPage(
+          pageBuilder: (_, _) => NoTransitionPage(
             child: Scaffold(
               body: BlocProvider<WatchlistMovieBloc>(
                 create: (_) => mockBloc,
@@ -70,7 +70,7 @@ void main() {
         ),
         GoRoute(
           path: '/movies/:id',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
       ],
     );

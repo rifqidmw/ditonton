@@ -54,7 +54,7 @@ void main() {
       routes: [
         GoRoute(
           path: '/',
-          pageBuilder: (_, __) => NoTransitionPage(
+          pageBuilder: (_, _) => NoTransitionPage(
             child: BlocProvider<MovieListBloc>(
               create: (_) => mockBloc,
               child: const MovieHomePage(),
@@ -63,19 +63,19 @@ void main() {
         ),
         GoRoute(
           path: '/movies/search',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
         GoRoute(
           path: '/movies/popular',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
         GoRoute(
           path: '/movies/top-rated',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
         GoRoute(
           path: '/movies/:id',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
       ],
     );

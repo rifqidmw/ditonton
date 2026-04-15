@@ -55,7 +55,7 @@ void main() {
       routes: [
         GoRoute(
           path: '/',
-          pageBuilder: (_, __) => NoTransitionPage(
+          pageBuilder: (_, _) => NoTransitionPage(
             child: BlocProvider<WatchlistTVSeriesBloc>(
               create: (_) => mockBloc,
               child: const WatchlistTVSeriesPage(),
@@ -64,7 +64,7 @@ void main() {
         ),
         GoRoute(
           path: '/tv-series/:id',
-          pageBuilder: (_, __) => const NoTransitionPage(child: SizedBox()),
+          pageBuilder: (_, _) => const NoTransitionPage(child: SizedBox()),
         ),
       ],
     );

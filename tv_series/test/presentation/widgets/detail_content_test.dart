@@ -161,12 +161,12 @@ void main() {
       routes: [
         GoRoute(
           path: '/',
-          pageBuilder: (_, __) =>
+          pageBuilder: (_, _) =>
               const NoTransitionPage(child: Scaffold(body: Text('Home'))),
         ),
         GoRoute(
           path: '/detail',
-          pageBuilder: (_, __) => NoTransitionPage(
+          pageBuilder: (_, _) => NoTransitionPage(
             child: Scaffold(
               body: BlocProvider<TVSeriesDetailBloc>(
                 create: (_) => mockBloc,
@@ -181,7 +181,7 @@ void main() {
         ),
         GoRoute(
           path: '/tv-series/:id',
-          pageBuilder: (_, __) =>
+          pageBuilder: (_, _) =>
               const NoTransitionPage(child: Scaffold(body: Text('Detail'))),
         ),
       ],
