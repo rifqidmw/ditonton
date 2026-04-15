@@ -15,15 +15,16 @@ workflows:
           flutter analyze
       - name: Flutter test
         script: |
-          (cd core && flutter test)
-          (cd movies && flutter test)
-          (cd tv_series && flutter test)
+          (cd core && flutter test --machine) 2>&1 | tee core_test.json
+          (cd movies && flutter test --machine) 2>&1 | tee movies_test.json
+          (cd tv_series && flutter test --machine) 2>&1 | tee tv_series_test.json
       - name: Flutter build iOS (simulator, no codesign)
         script: |
           flutter build ios --debug --simulator
     artifacts:
       - build/ios/iphoneos/Runner.app
       - flutter_drive.log
+      - '*.json'
     publishing:
       email:
         recipients:
@@ -46,15 +47,16 @@ workflows:
           flutter analyze
       - name: Flutter test
         script: |
-          (cd core && flutter test)
-          (cd movies && flutter test)
-          (cd tv_series && flutter test)
+          (cd core && flutter test --machine) 2>&1 | tee core_test.json
+          (cd movies && flutter test --machine) 2>&1 | tee movies_test.json
+          (cd tv_series && flutter test --machine) 2>&1 | tee tv_series_test.json
       - name: Build APK
         script: |
           flutter build apk --release
     artifacts:
       - build/**/outputs/**/*.apk
       - flutter_drive.log
+      - '*.json'
     publishing:
       email:
         recipients:
