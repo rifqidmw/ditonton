@@ -1,21 +1,37 @@
-import 'package:http_certificate_pinning/http_certificate_pinning.dart';
+import 'dart:io';
+
+import 'package:core/constants/api_constants.dart';
+import 'package:flutter/services.dart';
 
 class SslPinning {
-  static const List<String> _allowedSHAFingerprints = [
-    'C6:DB:AE:4D:C2:83:2C:FD:4E:63:FF:88:E9:50:42:6C:62:41:E3:C7:84:26:CF:2D:4D:D1:25:FE:97:EE:B8:C7',
-  ];
+  static const String _certificatePath = 'assets/certificates/moviedb.pem';
 
-  static Future<bool> check() async {
+  static late HttpClient client;
+
+  static Future<HttpClient> createPinnedHttpClient() async {
+    final certBytes = await rootBundle.load(_certificatePath);
+
+    final sc = SecurityContext(withTrustedRoots: false)
+      ..setTrustedCertificatesBytes(certBytes.buffer.asUint8List());
+
+    client = HttpClient(context: sc)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => false;
+
+    return client;
+  }
+
+  static Future<bool> check({HttpClient? httpClient}) async {
+    final http = httpClient ?? await createPinnedHttpClient();
+    final shouldClose = httpClient == null;
     try {
-      final result = await HttpCertificatePinning.check(
-        serverURL: 'https://api.themoviedb.org',
-        headerHttp: {},
-        sha: SHA.SHA256,
-        allowedSHAFingerprints: _allowedSHAFingerprints,
-        timeout: 60,
-      );
-      return result.contains('CONNECTION_SECURE');
+      final request = await http.headUrl(Uri.parse(ApiConstants.baseUrl));
+      final response = await request.close();
+      await response.drain<void>();
+      if (shouldClose) http.close();
+      return true;
     } catch (_) {
+      if (shouldClose) http.close();
       return false;
     }
   }

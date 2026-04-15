@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv_series/domain/usecases/get_season_detail.dart';
 import 'package:tv_series/domain/usecases/get_tv_series_detail.dart';
 import 'package:tv_series/domain/usecases/get_tv_series_recommendations.dart';
 import 'package:tv_series/domain/usecases/get_watchlist_status.dart';
-import 'package:tv_series/domain/usecases/save_watchlist.dart';
 import 'package:tv_series/domain/usecases/remove_watchlist.dart';
-import 'package:tv_series/domain/usecases/get_season_detail.dart';
+import 'package:tv_series/domain/usecases/save_watchlist.dart';
 import 'package:tv_series/presentation/bloc/tv_series_detail/tv_series_detail_event.dart';
 import 'package:tv_series/presentation/bloc/tv_series_detail/tv_series_detail_state.dart';
 
@@ -46,12 +46,14 @@ class TVSeriesDetailBloc
     );
 
     detailResult.fold(
-      (failure) => emit(
-        state.copyWith(
-          detailState: RequestState.error,
-          detailMessage: failure.message,
-        ),
-      ),
+      (failure) {
+        emit(
+          state.copyWith(
+            detailState: RequestState.error,
+            detailMessage: failure.message,
+          ),
+        );
+      },
       (tvSeries) {
         emit(
           state.copyWith(
@@ -62,18 +64,22 @@ class TVSeriesDetailBloc
         );
 
         recommendationResult.fold(
-          (failure) => emit(
-            state.copyWith(
-              recommendationState: RequestState.error,
-              recommendationMessage: failure.message,
-            ),
-          ),
-          (recommendations) => emit(
-            state.copyWith(
-              recommendationState: RequestState.loaded,
-              recommendations: recommendations,
-            ),
-          ),
+          (failure) {
+            emit(
+              state.copyWith(
+                recommendationState: RequestState.error,
+                recommendationMessage: failure.message,
+              ),
+            );
+          },
+          (recommendations) {
+            emit(
+              state.copyWith(
+                recommendationState: RequestState.loaded,
+                recommendations: recommendations,
+              ),
+            );
+          },
         );
       },
     );
@@ -86,12 +92,14 @@ class TVSeriesDetailBloc
     final result = await saveWatchlist.execute(event.tvSeriesDetail);
     result.fold(
       (failure) => emit(state.copyWith(watchlistMessage: failure.message)),
-      (successMessage) => emit(
-        state.copyWith(
-          watchlistMessage: successMessage,
-          isAddedToWatchlist: true,
-        ),
-      ),
+      (successMessage) {
+        emit(
+          state.copyWith(
+            watchlistMessage: successMessage,
+            isAddedToWatchlist: true,
+          ),
+        );
+      },
     );
   }
 
@@ -102,12 +110,14 @@ class TVSeriesDetailBloc
     final result = await removeWatchlist.execute(event.tvSeriesDetail);
     result.fold(
       (failure) => emit(state.copyWith(watchlistMessage: failure.message)),
-      (successMessage) => emit(
-        state.copyWith(
-          watchlistMessage: successMessage,
-          isAddedToWatchlist: false,
-        ),
-      ),
+      (successMessage) {
+        emit(
+          state.copyWith(
+            watchlistMessage: successMessage,
+            isAddedToWatchlist: false,
+          ),
+        );
+      },
     );
   }
 
@@ -129,18 +139,22 @@ class TVSeriesDetailBloc
       event.seasonNumber,
     );
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          seasonDetailState: RequestState.error,
-          seasonDetailMessage: failure.message,
-        ),
-      ),
-      (seasonDetail) => emit(
-        state.copyWith(
-          seasonDetailState: RequestState.loaded,
-          selectedSeasonDetail: seasonDetail,
-        ),
-      ),
+      (failure) {
+        emit(
+          state.copyWith(
+            seasonDetailState: RequestState.error,
+            seasonDetailMessage: failure.message,
+          ),
+        );
+      },
+      (seasonDetail) {
+        emit(
+          state.copyWith(
+            seasonDetailState: RequestState.loaded,
+            selectedSeasonDetail: seasonDetail,
+          ),
+        );
+      },
     );
   }
 }

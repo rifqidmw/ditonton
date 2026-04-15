@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/constants/api_constants.dart';
-import 'package:movies/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movies/domain/entities/movie.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -57,12 +57,11 @@ class MovieCard extends StatelessWidget {
                     ? CachedNetworkImage(
                         imageUrl: ApiConstants.imageUrl(movie.posterPath!),
                         width: 80,
-                        placeholder: (context, url) => const SizedBox(
+                        placeholder: (_, _) => const SizedBox(
                           width: 80,
                           child: Center(child: CircularProgressIndicator()),
                         ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                        errorWidget: (_, _, _) => const Icon(Icons.error),
                       )
                     : Container(
                         width: 80,

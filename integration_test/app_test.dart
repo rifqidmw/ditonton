@@ -1,6 +1,9 @@
+import 'package:core/network/ssl_pinning.dart';
 import 'package:ditonton/core/di/injection.dart' as di;
 import 'package:ditonton/core/router/app_router.dart';
+import 'package:ditonton/firebase_options.dart';
 import 'package:ditonton/main.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -9,6 +12,10 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await SslPinning.createPinnedHttpClient();
     di.init();
     await di.initDatabase();
   });

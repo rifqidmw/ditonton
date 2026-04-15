@@ -1,14 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:core/constants/api_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movies/domain/entities/movie.dart';
+import 'package:movies/domain/entities/movie_detail.dart';
 import 'package:movies/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:movies/presentation/bloc/movie_detail/movie_detail_event.dart';
 import 'package:movies/presentation/bloc/movie_detail/movie_detail_state.dart';
 import 'package:movies/presentation/bloc/movie_list/movie_list_state.dart';
-import 'package:movies/domain/entities/movie_detail.dart';
-import 'package:movies/domain/entities/movie.dart';
-import 'package:core/constants/api_constants.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class MovieDetailPage extends StatefulWidget {
   final int id;
@@ -89,9 +89,9 @@ class MovieDetailContent extends StatelessWidget {
             ? CachedNetworkImage(
                 imageUrl: ApiConstants.imageUrl(movie.posterPath!),
                 width: screenWidth,
-                placeholder: (context, url) =>
+                placeholder: (_, _) =>
                     const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (_, _, _) => const Icon(Icons.error),
               )
             : Container(width: screenWidth, height: 250, color: Colors.grey),
         Container(
@@ -207,37 +207,11 @@ class MovieDetailContent extends StatelessWidget {
                                     height: 150,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        final rec = recommendations[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              context.push('/movies/${rec.id}');
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: rec.posterPath != null
-                                                  ? CachedNetworkImage(
-                                                      imageUrl:
-                                                          ApiConstants.imageUrl(
-                                                            rec.posterPath!,
-                                                          ),
-                                                      width: 100,
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : Container(
-                                                      width: 100,
-                                                      color: Colors.grey,
-                                                      child: const Icon(
-                                                        Icons.movie,
-                                                      ),
-                                                    ),
-                                            ),
+                                      itemBuilder: (context, index) =>
+                                          _buildRecommendationItem(
+                                            context,
+                                            recommendations[index],
                                           ),
-                                        );
-                                      },
                                       itemCount: recommendations.length,
                                     ),
                                   );
@@ -281,6 +255,29 @@ class MovieDetailContent extends StatelessWidget {
 
   String _showGenres(List<MovieGenre> genres) {
     return genres.map((g) => g.name).join(', ');
+  }
+
+  Widget _buildRecommendationItem(BuildContext context, Movie rec) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: InkWell(
+        onTap: () => context.push('/movies/${rec.id}'),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: rec.posterPath != null
+              ? CachedNetworkImage(
+                  imageUrl: ApiConstants.imageUrl(rec.posterPath!),
+                  width: 100,
+                  fit: BoxFit.cover,
+                )
+              : Container(
+                  width: 100,
+                  color: Colors.grey,
+                  child: const Icon(Icons.movie),
+                ),
+        ),
+      ),
+    );
   }
 
   String _formatRuntime(int minutes) {

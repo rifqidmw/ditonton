@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/constants/api_constants.dart';
-import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
 
 class TVSeriesCard extends StatelessWidget {
   final TVSeries tvSeries;
@@ -57,10 +57,9 @@ class TVSeriesCard extends StatelessWidget {
                     ? CachedNetworkImage(
                         imageUrl: ApiConstants.imageUrl(tvSeries.posterPath!),
                         width: 80,
-                        placeholder: (context, url) =>
+                        placeholder: (_, _) =>
                             const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                        errorWidget: (_, _, _) => const Icon(Icons.error),
                       )
                     : Container(
                         width: 80,

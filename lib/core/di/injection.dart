@@ -1,4 +1,5 @@
 import 'package:core/database/database_helper.dart';
+import 'package:core/network/ssl_pinning.dart';
 import 'package:movies/data/datasources/movie_local_data_source.dart';
 import 'package:movies/data/datasources/movie_remote_data_source.dart';
 import 'package:movies/data/repositories/movie_repository_impl.dart';
@@ -37,6 +38,7 @@ import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.d
 import 'package:tv_series/presentation/bloc/tv_series_search/tv_series_search_bloc.dart';
 import 'package:tv_series/presentation/bloc/watchlist_tv_series/watchlist_tv_series_bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -151,6 +153,9 @@ void init() {
   // External
   locator.registerLazySingleton(() {
     final dio = Dio();
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () => SslPinning.client,
+    );
     dio.interceptors.add(
       PrettyDioLogger(
         requestHeader: true,

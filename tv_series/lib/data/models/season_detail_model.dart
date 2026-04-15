@@ -12,27 +12,18 @@ class EpisodeModel extends Episode {
     super.airDate,
   });
 
-  factory EpisodeModel.fromJson(Map<String, dynamic> json) => EpisodeModel(
-    id: json['id'],
-    name: json['name'] ?? '',
-    episodeNumber: json['episode_number'] ?? 0,
-    seasonNumber: json['season_number'] ?? 0,
-    overview: json['overview'] ?? '',
-    stillPath: json['still_path'],
-    voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
-    airDate: json['air_date'],
-  );
-
-  Episode toEntity() => Episode(
-    id: id,
-    name: name,
-    episodeNumber: episodeNumber,
-    seasonNumber: seasonNumber,
-    overview: overview,
-    stillPath: stillPath,
-    voteAverage: voteAverage,
-    airDate: airDate,
-  );
+  factory EpisodeModel.fromJson(Map<String, dynamic> json) {
+    return EpisodeModel(
+      id: json['id'],
+      name: json['name'] ?? '',
+      episodeNumber: json['episode_number'] ?? 0,
+      seasonNumber: json['season_number'] ?? 0,
+      overview: json['overview'] ?? '',
+      stillPath: json['still_path'],
+      voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
+      airDate: json['air_date'],
+    );
+  }
 }
 
 class SeasonDetailModel extends SeasonDetail {
@@ -45,24 +36,16 @@ class SeasonDetailModel extends SeasonDetail {
     required super.episodes,
   });
 
-  factory SeasonDetailModel.fromJson(Map<String, dynamic> json) =>
-      SeasonDetailModel(
-        id: json['id'],
-        name: json['name'] ?? '',
-        seasonNumber: json['season_number'] ?? 0,
-        posterPath: json['poster_path'],
-        overview: json['overview'] ?? '',
-        episodes: (json['episodes'] as List<dynamic>? ?? [])
-            .map((e) => EpisodeModel.fromJson(e))
-            .toList(),
-      );
-
-  SeasonDetail toEntity() => SeasonDetail(
-    id: id,
-    name: name,
-    seasonNumber: seasonNumber,
-    posterPath: posterPath,
-    overview: overview,
-    episodes: episodes,
-  );
+  factory SeasonDetailModel.fromJson(Map<String, dynamic> json) {
+    return SeasonDetailModel(
+      id: json['id'],
+      name: json['name'] ?? '',
+      seasonNumber: json['season_number'] ?? 0,
+      posterPath: json['poster_path'],
+      overview: json['overview'] ?? '',
+      episodes: (json['episodes'] as List<dynamic>? ?? [])
+          .map((e) => EpisodeModel.fromJson(e))
+          .toList(),
+    );
+  }
 }

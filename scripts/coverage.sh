@@ -1,49 +1,60 @@
 #!/bin/bash
 
-echo "Running tests with coverage..."
-flutter test --coverage \
-  --coverage-path=coverage/lcov.info \
-  --coverage-package=ditonton \
-  --coverage-package=core \
-  --coverage-package=movies \
-  --coverage-package=tv_series \
-  --coverage-package=about
+set -e
 
-if ! command -v lcov &> /dev/null
-then
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+LCOV_MERGED="$ROOT_DIR/coverage/lcov.info"
+
+if ! command -v lcov &> /dev/null; then
     echo "lcov is not installed. Please install it:"
     echo "  macOS: brew install lcov"
     echo "  Linux: sudo apt-get install lcov"
     exit 1
 fi
 
+mkdir -p "$ROOT_DIR/coverage"
+rm -f "$LCOV_MERGED"
+
+MODULES=("core" "movies" "tv_series" "about")
+
+for MODULE in "${MODULES[@]}"; do
+    MODULE_DIR="$ROOT_DIR/$MODULE"
+    if [ ! -d "$MODULE_DIR/test" ]; then
+        echo "No test directory in $MODULE — skipping"
+        continue
+    fi
+
+    echo "Running tests with coverage for module: $MODULE..."
+    (cd "$MODULE_DIR" && flutter test --coverage --coverage-path=coverage/lcov.info) || true
+
+    MODULE_LCOV="$MODULE_DIR/coverage/lcov.info"
+    if [ ! -f "$MODULE_LCOV" ]; then
+        echo "  No coverage output for $MODULE — skipping"
+        continue
+    fi
+
+    sed "s|^SF:lib/|SF:$MODULE/lib/|g" "$MODULE_LCOV" >> "$LCOV_MERGED"
+done
+
+if [ ! -s "$LCOV_MERGED" ]; then
+    echo "ERROR: No coverage data collected."
+    exit 1
+fi
+
 echo "Filtering coverage..."
-lcov --remove coverage/lcov.info \
+lcov --remove "$LCOV_MERGED" \
   '**/*.g.dart' \
   '**/*.freezed.dart' \
-  '**/main.dart' \
   'test/**' \
-  'integration_test/**' \
-  '**/pub-cache/**' \
-  '*.pub-cache*' \
   --ignore-errors unused,empty \
-  -o coverage/lcov.info
-
-lcov --extract coverage/lcov.info \
-  '*/core/lib/*' \
-  '*/movies/lib/*' \
-  '*/tv_series/lib/*' \
-  '*/about/lib/*' \
-  '*/lib/*' \
-  --ignore-errors unused,empty \
-  -o coverage/lcov.info
+  -o "$LCOV_MERGED"
 
 echo "Generating HTML report..."
-genhtml coverage/lcov.info \
+genhtml "$LCOV_MERGED" \
   --ignore-errors empty \
-  -o coverage/html
+  -o "$ROOT_DIR/coverage/html"
 
-COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | grep -o '[0-9]*\.[0-9]*%' | head -1 | tr -d '%')
+COVERAGE=$(lcov --summary "$LCOV_MERGED" 2>&1 | grep "lines" | grep -o '[0-9]*\.[0-9]*%' | head -1 | tr -d '%')
 
 echo ""
 echo "======================================"

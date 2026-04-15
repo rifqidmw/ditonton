@@ -20,29 +20,35 @@ class SeasonModel extends Season {
     super.posterPath,
   });
 
-  factory SeasonModel.fromJson(Map<String, dynamic> json) => SeasonModel(
-    id: json['id'],
-    name: json['name'],
-    episodeCount: json['episode_count'],
-    seasonNumber: json['season_number'],
-    posterPath: json['poster_path'],
-  );
+  factory SeasonModel.fromJson(Map<String, dynamic> json) {
+    return SeasonModel(
+      id: json['id'],
+      name: json['name'],
+      episodeCount: json['episode_count'],
+      seasonNumber: json['season_number'],
+      posterPath: json['poster_path'],
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'episode_count': episodeCount,
-    'season_number': seasonNumber,
-    'poster_path': posterPath,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'episode_count': episodeCount,
+      'season_number': seasonNumber,
+      'poster_path': posterPath,
+    };
+  }
 
-  Season toEntity() => Season(
-    id: id,
-    name: name,
-    episodeCount: episodeCount,
-    seasonNumber: seasonNumber,
-    posterPath: posterPath,
-  );
+  Season toEntity() {
+    return Season(
+      id: id,
+      name: name,
+      episodeCount: episodeCount,
+      seasonNumber: seasonNumber,
+      posterPath: posterPath,
+    );
+  }
 }
 
 class TVSeriesDetailModel extends TVSeriesDetail {
@@ -61,77 +67,82 @@ class TVSeriesDetailModel extends TVSeriesDetail {
     required super.status,
   });
 
-  factory TVSeriesDetailModel.fromJson(Map<String, dynamic> json) =>
-      TVSeriesDetailModel(
-        id: json['id'],
-        name: json['name'],
-        posterPath: json['poster_path'],
-        backdropPath: json['backdrop_path'],
-        overview: json['overview'],
-        voteAverage: (json['vote_average'] as num).toDouble(),
-        firstAirDate: json['first_air_date'],
-        genres: List<GenreModel>.from(
-          json['genres'].map((x) => GenreModel.fromJson(x)),
-        ),
-        numberOfEpisodes: json['number_of_episodes'],
-        numberOfSeasons: json['number_of_seasons'],
-        seasons: List<SeasonModel>.from(
-          json['seasons'].map((x) => SeasonModel.fromJson(x)),
-        ),
-        status: json['status'],
-      );
+  factory TVSeriesDetailModel.fromJson(Map<String, dynamic> json) {
+    return TVSeriesDetailModel(
+      id: json['id'],
+      name: json['name'],
+      posterPath: json['poster_path'],
+      backdropPath: json['backdrop_path'],
+      overview: json['overview'],
+      voteAverage: (json['vote_average'] as num).toDouble(),
+      firstAirDate: json['first_air_date'],
+      genres: List<GenreModel>.from(
+        json['genres'].map((x) => GenreModel.fromJson(x)),
+      ),
+      numberOfEpisodes: json['number_of_episodes'],
+      numberOfSeasons: json['number_of_seasons'],
+      seasons: List<SeasonModel>.from(
+        json['seasons'].map((x) => SeasonModel.fromJson(x)),
+      ),
+      status: json['status'],
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'poster_path': posterPath,
-    'backdrop_path': backdropPath,
-    'overview': overview,
-    'vote_average': voteAverage,
-    'first_air_date': firstAirDate,
-    'genres': genres
-        .map((genre) => {'id': genre.id, 'name': genre.name})
-        .toList(),
-    'number_of_episodes': numberOfEpisodes,
-    'number_of_seasons': numberOfSeasons,
-    'seasons': seasons
-        .map(
-          (season) => {
-            'id': season.id,
-            'name': season.name,
-            'episode_count': season.episodeCount,
-            'season_number': season.seasonNumber,
-            'poster_path': season.posterPath,
-          },
-        )
-        .toList(),
-    'status': status,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'poster_path': posterPath,
+      'backdrop_path': backdropPath,
+      'overview': overview,
+      'vote_average': voteAverage,
+      'first_air_date': firstAirDate,
+      'genres': genres
+          .map((genre) => {'id': genre.id, 'name': genre.name})
+          .toList(),
+      'number_of_episodes': numberOfEpisodes,
+      'number_of_seasons': numberOfSeasons,
+      'seasons': seasons
+          .map(
+            (season) => {
+              'id': season.id,
+              'name': season.name,
+              'episode_count': season.episodeCount,
+              'season_number': season.seasonNumber,
+              'poster_path': season.posterPath,
+            },
+          )
+          .toList(),
+      'status': status,
+    };
+  }
 
-  TVSeriesDetail toEntity() => TVSeriesDetail(
-    id: id,
-    name: name,
-    posterPath: posterPath,
-    backdropPath: backdropPath,
-    overview: overview,
-    voteAverage: voteAverage,
-    firstAirDate: firstAirDate,
-    genres: genres
-        .map((genre) => Genre(id: genre.id, name: genre.name))
-        .toList(),
-    numberOfEpisodes: numberOfEpisodes,
-    numberOfSeasons: numberOfSeasons,
-    seasons: seasons
-        .map(
-          (season) => Season(
-            id: season.id,
-            name: season.name,
-            episodeCount: season.episodeCount,
-            seasonNumber: season.seasonNumber,
-            posterPath: season.posterPath,
-          ),
-        )
-        .toList(),
-    status: status,
-  );
+  TVSeriesDetail toEntity() {
+    return TVSeriesDetail(
+      id: id,
+      name: name,
+      posterPath: posterPath,
+      backdropPath: backdropPath,
+      overview: overview,
+      voteAverage: voteAverage,
+      firstAirDate: firstAirDate,
+      genres: genres
+          .map((genre) => Genre(id: genre.id, name: genre.name))
+          .toList(),
+      numberOfEpisodes: numberOfEpisodes,
+      numberOfSeasons: numberOfSeasons,
+      seasons: seasons
+          .map(
+            (season) => Season(
+              id: season.id,
+              name: season.name,
+              episodeCount: season.episodeCount,
+              seasonNumber: season.seasonNumber,
+              posterPath: season.posterPath,
+            ),
+          )
+          .toList(),
+      status: status,
+    );
+  }
 }

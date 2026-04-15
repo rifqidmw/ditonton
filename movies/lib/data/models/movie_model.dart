@@ -12,38 +12,44 @@ class MovieModel extends Movie {
     required super.genreIds,
   });
 
-  factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
-    id: json['id'],
-    title: json['title'],
-    posterPath: json['poster_path'],
-    backdropPath: json['backdrop_path'],
-    overview: json['overview'],
-    voteAverage: (json['vote_average'] as num).toDouble(),
-    releaseDate: json['release_date'],
-    genreIds: List<int>.from(json['genre_ids'].map((x) => x)),
-  );
+  factory MovieModel.fromJson(Map<String, dynamic> json) {
+    return MovieModel(
+      id: json['id'],
+      title: json['title'],
+      posterPath: json['poster_path'],
+      backdropPath: json['backdrop_path'],
+      overview: json['overview'],
+      voteAverage: (json['vote_average'] as num).toDouble(),
+      releaseDate: json['release_date'],
+      genreIds: List<int>.from(json['genre_ids'].map((x) => x)),
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'poster_path': posterPath,
-    'backdrop_path': backdropPath,
-    'overview': overview,
-    'vote_average': voteAverage,
-    'release_date': releaseDate,
-    'genre_ids': genreIds,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'poster_path': posterPath,
+      'backdrop_path': backdropPath,
+      'overview': overview,
+      'vote_average': voteAverage,
+      'release_date': releaseDate,
+      'genre_ids': genreIds,
+    };
+  }
 
-  Movie toEntity() => Movie(
-    id: id,
-    title: title,
-    posterPath: posterPath,
-    backdropPath: backdropPath,
-    overview: overview,
-    voteAverage: voteAverage,
-    releaseDate: releaseDate,
-    genreIds: genreIds,
-  );
+  Movie toEntity() {
+    return Movie(
+      id: id,
+      title: title,
+      posterPath: posterPath,
+      backdropPath: backdropPath,
+      overview: overview,
+      voteAverage: voteAverage,
+      releaseDate: releaseDate,
+      genreIds: genreIds,
+    );
+  }
 }
 
 class MovieResponse {
@@ -51,9 +57,11 @@ class MovieResponse {
 
   MovieResponse({required this.movieList});
 
-  factory MovieResponse.fromJson(Map<String, dynamic> json) => MovieResponse(
-    movieList: List<MovieModel>.from(
-      (json['results'] as List).map((x) => MovieModel.fromJson(x)),
-    ),
-  );
+  factory MovieResponse.fromJson(Map<String, dynamic> json) {
+    return MovieResponse(
+      movieList: List<MovieModel>.from(
+        (json['results'] as List).map((x) => MovieModel.fromJson(x)),
+      ),
+    );
+  }
 }

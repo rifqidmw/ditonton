@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/constants/api_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movies/domain/entities/movie.dart';
 import 'package:movies/presentation/bloc/movie_list/movie_list_bloc.dart';
 import 'package:movies/presentation/bloc/movie_list/movie_list_event.dart';
 import 'package:movies/presentation/bloc/movie_list/movie_list_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class MovieHomePage extends StatefulWidget {
   const MovieHomePage({super.key});
@@ -34,9 +34,7 @@ class _MovieHomePageState extends State<MovieHomePage> {
         title: const Text('Movies'),
         actions: [
           IconButton(
-            onPressed: () {
-              context.push('/movies/search');
-            },
+            onPressed: () => context.push('/movies/search'),
             icon: const Icon(Icons.search),
           ),
         ],
@@ -149,12 +147,11 @@ class _MovieList extends StatelessWidget {
                 child: movie.posterPath != null
                     ? CachedNetworkImage(
                         imageUrl: ApiConstants.imageUrl(movie.posterPath!),
-                        placeholder: (context, url) => const SizedBox(
+                        placeholder: (_, _) => const SizedBox(
                           width: 120,
                           child: Center(child: CircularProgressIndicator()),
                         ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                        errorWidget: (_, _, _) => const Icon(Icons.error),
                       )
                     : Container(
                         width: 120,

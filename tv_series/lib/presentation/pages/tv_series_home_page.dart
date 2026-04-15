@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/constants/api_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_bloc.dart';
 import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_event.dart';
 import 'package:tv_series/presentation/bloc/tv_series_list/tv_series_list_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class TVSeriesHomePage extends StatefulWidget {
   const TVSeriesHomePage({super.key});
@@ -148,10 +148,9 @@ class TVSeriesList extends StatelessWidget {
                 child: tvSeries.posterPath != null
                     ? CachedNetworkImage(
                         imageUrl: ApiConstants.imageUrl(tvSeries.posterPath!),
-                        placeholder: (context, url) =>
+                        placeholder: (_, _) =>
                             const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                        errorWidget: (_, _, _) => const Icon(Icons.error),
                       )
                     : Container(
                         width: 120,

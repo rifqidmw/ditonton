@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movies/presentation/bloc/movie_list/movie_list_state.dart';
 import 'package:movies/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
 import 'package:movies/presentation/bloc/watchlist_movie/watchlist_movie_event.dart';
 import 'package:movies/presentation/bloc/watchlist_movie/watchlist_movie_state.dart';
 import 'package:movies/presentation/widgets/movie_card.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class WatchlistMoviePage extends StatefulWidget {
   const WatchlistMoviePage({super.key});

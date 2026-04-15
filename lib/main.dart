@@ -28,10 +28,11 @@ void main() async {
     return true;
   };
 
-  await SslPinning.check();
+  final pinnedClient = await SslPinning.createPinnedHttpClient();
+  final isSecure = await SslPinning.check(httpClient: pinnedClient);
   di.init();
   await di.initDatabase();
-  runApp(const MainApp());
+  runApp(isSecure ? const MainApp() : const _SslPinningFailureApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -63,6 +64,27 @@ class MainApp extends StatelessWidget {
           useMaterial3: true,
         ),
         routerConfig: router,
+      ),
+    );
+  }
+}
+
+class _SslPinningFailureApp extends StatelessWidget {
+  const _SslPinningFailureApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Text(
+              'Koneksi tidak aman.\n\nSertifikat SSL yang diterima tidak sesuai dengan sertifikat yang dipin pada aplikasi.',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       ),
     );
   }
