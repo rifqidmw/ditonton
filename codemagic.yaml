@@ -27,7 +27,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - user@example.com
+          - rifqi.dmw@gmail.com
         notify:
           success: true
           failure: true
@@ -58,7 +58,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - user@example.com
+          - rifqi.dmw@gmail.com
         notify:
           success: true
           failure: true
