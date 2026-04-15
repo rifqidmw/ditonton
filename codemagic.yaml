@@ -15,7 +15,9 @@ workflows:
           flutter analyze
       - name: Flutter test
         script: |
-          flutter test
+          (cd core && flutter test)
+          (cd movies && flutter test)
+          (cd tv_series && flutter test)
       - name: Flutter build iOS (simulator, no codesign)
         script: |
           flutter build ios --debug --simulator
@@ -44,7 +46,9 @@ workflows:
           flutter analyze
       - name: Flutter test
         script: |
-          flutter test
+          (cd core && flutter test)
+          (cd movies && flutter test)
+          (cd tv_series && flutter test)
       - name: Build APK
         script: |
           flutter build apk --release
